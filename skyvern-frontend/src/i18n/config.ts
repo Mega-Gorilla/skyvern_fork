@@ -2,8 +2,9 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-// 初回描画に必須の common (英語) のみ静的バンドル
+// 初回描画に必須のネームスペース (英語) を静的バンドル
 import enCommon from "../locales/en/common.json";
+import enErrors from "../locales/en/errors.json";
 
 // 共通定数をインポート
 import {
@@ -53,9 +54,10 @@ async function loadTranslation(
     return {};
   }
 
-  // common/en は既に静的バンドル済み
-  if (language === "en" && namespace === "common") {
-    return enCommon;
+  // en/common, en/errors は既に静的バンドル済み
+  if (language === "en") {
+    if (namespace === "common") return enCommon;
+    if (namespace === "errors") return enErrors;
   }
 
   // パスを構築
@@ -107,10 +109,11 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    // 静的バンドル分（必須: en/common のみ）
+    // 静的バンドル分（必須ネームスペース: en/common, en/errors）
     resources: {
       en: {
         common: enCommon,
+        errors: enErrors,
       },
     },
 
