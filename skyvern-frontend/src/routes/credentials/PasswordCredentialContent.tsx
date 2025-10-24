@@ -17,7 +17,7 @@ import {
 } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 
 type Props = {
   values: {
@@ -228,34 +228,36 @@ function PasswordCredentialContent({
                   </div>
                   <p className="text-sm text-slate-400">
                     {t("password.twoFactor.authenticatorHelp")}{" "}
-                    <Link
-                      to="https://bitwarden.com/help/integrated-authenticator/#manually-enter-a-secret"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      {t("password.twoFactor.bitwarden")}
-                    </Link>
-                    {", "}
-                    <Link
-                      to="https://support.1password.com/one-time-passwords#on-1passwordcom"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      1Password
-                    </Link>
-                    {", "}
-                    {t("password.twoFactor.and")}{" "}
-                    <Link
-                      to="https://support.lastpass.com/s/document-item?language=en_US&bundleId=lastpass&topicId=LastPass/create-totp-vault.html&_LANG=enus"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      LastPass
-                    </Link>
-                    {"."}
+                    <Trans
+                      i18nKey="password.twoFactor.authenticatorApps"
+                      ns="credentials"
+                      components={{
+                        bitwarden: (
+                          <Link
+                            to="https://bitwarden.com/help/integrated-authenticator/#manually-enter-a-secret"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-2"
+                          />
+                        ),
+                        onepassword: (
+                          <Link
+                            to="https://support.1password.com/one-time-passwords#on-1passwordcom"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-2"
+                          />
+                        ),
+                        lastpass: (
+                          <Link
+                            to="https://support.lastpass.com/s/document-item?language=en_US&bundleId=lastpass&topicId=LastPass/create-totp-vault.html&_LANG=enus"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-2"
+                          />
+                        ),
+                      }}
+                    />
                   </p>
                 </div>
               )}
