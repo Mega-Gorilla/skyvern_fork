@@ -3,7 +3,8 @@
     "sizeLimitTitle": "ファイルサイズ上限超過",
     "sizeLimitDescription": "アップロードしようとしているファイルが10MBの上限を超えています。別のファイルで再試行してください",
     "uploadFailedTitle": "ファイルのアップロードに失敗しました",
-    "uploadFailedDescription": "ファイルのアップロード中にエラーが発生しました: {{message}}"
+    "uploadFailedDescription": "ファイルのアップロード中にエラーが発生しました: {{message}}",
+    "uploadFailedUnknown": "ファイルのアップロード中に不明なエラーが発生しました"
   },
   "api": {
     "requestFailed": "リクエストが失敗しました",

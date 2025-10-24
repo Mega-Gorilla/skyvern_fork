@@ -67,18 +67,24 @@ function FileUpload({ value, onChange }: Props) {
     },
     onError: (error) => {
       setFile(null);
-      // error.message のフォールバック処理（Nit対応）
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : t("errors:fileUpload.uploadFailedDescription");
-      toast({
-        variant: "destructive",
-        title: t("errors:fileUpload.uploadFailedTitle"),
-        description: t("errors:fileUpload.uploadFailedDescription", {
-          message: errorMessage,
-        }),
-      });
+      // error.message のフォールバック処理
+      // Error以外が投げられた場合は専用のフォールバックメッセージを使用
+      if (error instanceof Error) {
+        toast({
+          variant: "destructive",
+          title: t("errors:fileUpload.uploadFailedTitle"),
+          description: t("errors:fileUpload.uploadFailedDescription", {
+            message: error.message,
+          }),
+        });
+      } else {
+        // Error以外（throw "timeout" など）の場合
+        toast({
+          variant: "destructive",
+          title: t("errors:fileUpload.uploadFailedTitle"),
+          description: t("errors:fileUpload.uploadFailedUnknown"),
+        });
+      }
     },
   });
 
@@ -132,7 +138,12 @@ function FileUpload({ value, onChange }: Props) {
                 <span>{file.name}</span>
               </div>
             </a>
-            <Button onClick={() => reset()} size="icon" variant="secondary">
+            <Button
+              onClick={() => reset()}
+              size="icon"
+              variant="secondary"
+              aria-label={t("common:fileUpload.removeFile")}
+            >
               <Cross2Icon />
             </Button>
           </div>
