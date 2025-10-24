@@ -56,7 +56,7 @@ function Workflows() {
   const createWorkflowMutation = useCreateWorkflowMutation();
 
   const emptyWorkflowRequest: WorkflowCreateYAMLRequest = {
-    title: t("defaults.newWorkflow"),
+    title: "New Workflow",
     description: "",
     ai_fallback: true,
     run_with: "agent",
