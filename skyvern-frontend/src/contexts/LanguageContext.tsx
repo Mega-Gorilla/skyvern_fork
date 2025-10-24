@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { SUPPORTED_LANGUAGES } from "@/i18n/constants";
 
 interface LanguageContextValue {
   language: string;
@@ -38,13 +39,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
    */
   useEffect(() => {
     const determineLanguage = (): string => {
-      console.log("[LanguageContext] Determining language...");
+      if (import.meta.env.DEV) {
+        console.log("[LanguageContext] Determining language...");
+      }
 
       // 優先度1: URLクエリパラメータ
       const urlParams = new URLSearchParams(window.location.search);
       const urlLang = urlParams.get("lng");
-      if (urlLang && ["en", "ja"].includes(urlLang)) {
-        console.log("[LanguageContext] ✓ Using URL parameter:", urlLang);
+      if (urlLang && SUPPORTED_LANGUAGES.includes(urlLang as never)) {
+        if (import.meta.env.DEV) {
+          console.log("[LanguageContext] ✓ Using URL parameter:", urlLang);
+        }
         return urlLang;
       }
 
@@ -53,27 +58,38 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         .split("; ")
         .find((row) => row.startsWith("i18next="))
         ?.split("=")[1];
-      if (cookieLang && ["en", "ja"].includes(cookieLang)) {
-        console.log("[LanguageContext] ✓ Using Cookie:", cookieLang);
+      if (cookieLang && SUPPORTED_LANGUAGES.includes(cookieLang as never)) {
+        if (import.meta.env.DEV) {
+          console.log("[LanguageContext] ✓ Using Cookie:", cookieLang);
+        }
         return cookieLang;
       }
 
       // 優先度3: localStorage
       const storedLang = localStorage.getItem("i18nextLng");
-      if (storedLang && ["en", "ja"].includes(storedLang)) {
-        console.log("[LanguageContext] ✓ Using localStorage:", storedLang);
+      if (storedLang && SUPPORTED_LANGUAGES.includes(storedLang as never)) {
+        if (import.meta.env.DEV) {
+          console.log("[LanguageContext] ✓ Using localStorage:", storedLang);
+        }
         return storedLang;
       }
 
       // 優先度4: ブラウザ言語
       const browserLang = navigator.language.split("-")[0];
-      if (browserLang && ["en", "ja"].includes(browserLang)) {
-        console.log("[LanguageContext] ✓ Using browser language:", browserLang);
+      if (browserLang && SUPPORTED_LANGUAGES.includes(browserLang as never)) {
+        if (import.meta.env.DEV) {
+          console.log(
+            "[LanguageContext] ✓ Using browser language:",
+            browserLang,
+          );
+        }
         return browserLang;
       }
 
       // 優先度5: デフォルト
-      console.log("[LanguageContext] ✓ Using default: en");
+      if (import.meta.env.DEV) {
+        console.log("[LanguageContext] ✓ Using default: en");
+      }
       return "en";
     };
 
@@ -82,9 +98,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     // i18nの言語が異なる場合のみ切り替え
     const currentLanguage = i18n.language || "en";
     if (currentLanguage !== targetLang) {
-      console.log(
-        `[LanguageContext] Switching from ${currentLanguage} to ${targetLang}`,
-      );
+      if (import.meta.env.DEV) {
+        console.log(
+          `[LanguageContext] Switching from ${currentLanguage} to ${targetLang}`,
+        );
+      }
       i18n.changeLanguage(targetLang);
     }
   }, [i18n]);
@@ -99,12 +117,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
    * 4. HTML lang属性 (A11y/SEO)
    */
   const setLanguage = async (lang: string) => {
-    if (!["en", "ja"].includes(lang)) {
-      console.error(`[LanguageContext] Invalid language: ${lang}`);
+    if (!SUPPORTED_LANGUAGES.includes(lang as never)) {
+      if (import.meta.env.DEV) {
+        console.error(`[LanguageContext] Invalid language: ${lang}`);
+      }
       return;
     }
 
-    console.log(`[LanguageContext] User requested language change: ${lang}`);
+    if (import.meta.env.DEV) {
+      console.log(`[LanguageContext] User requested language change: ${lang}`);
+    }
 
     // 1. i18nextを即座に切り替え（UI即座反映）
     await i18n.changeLanguage(lang);
@@ -118,7 +140,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     // 4. <html lang> 属性を更新（A11y + SEO）
     document.documentElement.lang = lang;
 
-    console.log(`[LanguageContext] Language change complete: ${lang}`);
+    if (import.meta.env.DEV) {
+      console.log(`[LanguageContext] Language change complete: ${lang}`);
+    }
   };
 
   return (

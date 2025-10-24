@@ -5,6 +5,14 @@ import LanguageDetector from "i18next-browser-languagedetector";
 // 初回描画に必須の common (英語) のみ静的バンドル
 import enCommon from "../locales/en/common.json";
 
+// 共通定数をインポート
+import {
+  SUPPORTED_LANGUAGES,
+  SUPPORTED_NAMESPACES,
+  type SupportedLanguage,
+  type SupportedNamespace,
+} from "./constants";
+
 /**
  * Vite の import.meta.glob で翻訳ファイルをすべて列挙
  *
@@ -21,13 +29,6 @@ const translationModules = import.meta.glob<{
   default: Record<string, unknown>;
 }>("../locales/*/*.json", { eager: false, import: "default" });
 
-// サポートする言語と名前空間の定義（ホワイトリスト）
-const SUPPORTED_LANGUAGES = ["en", "ja"] as const;
-const SUPPORTED_NAMESPACES = ["common"] as const;
-
-type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
-type SupportedNamespace = (typeof SUPPORTED_NAMESPACES)[number];
-
 /**
  * 翻訳リソースの動的ロード関数
  */
@@ -37,14 +38,18 @@ async function loadTranslation(
 ): Promise<Record<string, unknown>> {
   // ホワイトリストチェック
   if (!SUPPORTED_LANGUAGES.includes(language as SupportedLanguage)) {
-    console.warn(
-      `[i18n] Unsupported language: ${language}, falling back to 'en'`,
-    );
+    if (import.meta.env.DEV) {
+      console.warn(
+        `[i18n] Unsupported language: ${language}, falling back to 'en'`,
+      );
+    }
     language = "en";
   }
 
   if (!SUPPORTED_NAMESPACES.includes(namespace as SupportedNamespace)) {
-    console.error(`[i18n] Unknown namespace: ${namespace}`);
+    if (import.meta.env.DEV) {
+      console.error(`[i18n] Unknown namespace: ${namespace}`);
+    }
     return {};
   }
 
@@ -60,11 +65,15 @@ async function loadTranslation(
   const moduleLoader = translationModules[modulePath];
 
   if (!moduleLoader) {
-    console.error(`[i18n] Translation file not found: ${modulePath}`);
+    if (import.meta.env.DEV) {
+      console.error(`[i18n] Translation file not found: ${modulePath}`);
+    }
 
     // フォールバック: 日本語失敗時は英語を試行
     if (language !== "en") {
-      console.warn(`[i18n] Falling back to en/${namespace}`);
+      if (import.meta.env.DEV) {
+        console.warn(`[i18n] Falling back to en/${namespace}`);
+      }
       return loadTranslation("en", namespace);
     }
 
@@ -75,10 +84,14 @@ async function loadTranslation(
   try {
     // 動的インポート実行（Viteが自動的にチャンク分割）
     const module = await moduleLoader();
-    console.log(`[i18n] Loaded ${modulePath} successfully`);
+    if (import.meta.env.DEV) {
+      console.log(`[i18n] Loaded ${modulePath} successfully`);
+    }
     return module;
   } catch (error) {
-    console.error(`[i18n] Failed to load ${modulePath}:`, error);
+    if (import.meta.env.DEV) {
+      console.error(`[i18n] Failed to load ${modulePath}:`, error);
+    }
 
     // フォールバック
     if (language !== "en") {
@@ -168,7 +181,9 @@ i18n.services.backendConnector.backend = {
 
 // 言語変更時の処理
 i18n.on("languageChanged", (lng) => {
-  console.log(`[i18n] Language changed to: ${lng}`);
+  if (import.meta.env.DEV) {
+    console.log(`[i18n] Language changed to: ${lng}`);
+  }
 
   // <html lang> 属性を更新（A11y対応）
   if (typeof document !== "undefined") {
@@ -187,8 +202,10 @@ if (typeof document !== "undefined") {
 
 // リソース読み込み失敗の監視
 i18n.on("failedLoading", (lng, ns, msg) => {
-  const error = `Failed to load ${lng}/${ns}: ${msg}`;
-  console.error(`[i18n] ${error}`);
+  if (import.meta.env.DEV) {
+    const error = `Failed to load ${lng}/${ns}: ${msg}`;
+    console.error(`[i18n] ${error}`);
+  }
 });
 
 export default i18n;

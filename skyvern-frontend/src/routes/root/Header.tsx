@@ -2,6 +2,7 @@ import { DiscordLogoIcon } from "@radix-ui/react-icons";
 import GitHubButton from "react-github-btn";
 import { Link, useMatch, useSearchParams } from "react-router-dom";
 import { NavigationHamburgerMenu } from "./NavigationHamburgerMenu";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 function Header() {
   const [searchParams] = useSearchParams();
@@ -19,7 +20,8 @@ function Header() {
     <header>
       <div className="flex h-24 items-center px-6">
         <NavigationHamburgerMenu />
-        <div className="ml-auto flex gap-4">
+        <div className="ml-auto flex items-center gap-4">
+          <LanguageSelector />
           <Link
             to="https://discord.com/invite/fG2XXEuQX3"
             target="_blank"
