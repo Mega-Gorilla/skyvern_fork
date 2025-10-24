@@ -5,6 +5,12 @@ import LanguageDetector from "i18next-browser-languagedetector";
 // 初回描画に必須のネームスペース (英語) を静的バンドル
 import enCommon from "../locales/en/common.json";
 import enErrors from "../locales/en/errors.json";
+import enWorkflows from "../locales/en/workflows.json";
+import enTasks from "../locales/en/tasks.json";
+import enSettings from "../locales/en/settings.json";
+import enCredentials from "../locales/en/credentials.json";
+import enBrowserSessions from "../locales/en/browserSessions.json";
+import enHistory from "../locales/en/history.json";
 
 // 共通定数をインポート
 import {
@@ -109,11 +115,17 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    // 静的バンドル分（必須ネームスペース: en/common, en/errors）
+    // 静的バンドル分（必須ネームスペース: すべてのen/*）
     resources: {
       en: {
         common: enCommon,
         errors: enErrors,
+        workflows: enWorkflows,
+        tasks: enTasks,
+        settings: enSettings,
+        credentials: enCredentials,
+        browserSessions: enBrowserSessions,
+        history: enHistory,
       },
     },
 
