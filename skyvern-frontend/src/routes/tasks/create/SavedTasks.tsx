@@ -28,7 +28,7 @@ function SavedTasks() {
 
   function createEmptyTaskTemplate() {
     return {
-      title: "New Template",
+      title: t("saved.defaults.newTemplate"),
       description: "",
       is_saved_task: true,
       webhook_callback_url: null,
@@ -45,7 +45,7 @@ function SavedTasks() {
         blocks: [
           {
             block_type: "task",
-            label: "New Template",
+            label: t("saved.defaults.newTemplate"),
             url: "https://example.com",
             navigation_goal: "",
             data_extraction_goal: null,

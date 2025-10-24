@@ -19,7 +19,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { ReloadIcon, TrashIcon } from "@radix-ui/react-icons";
 import { CredentialApiResponse } from "@/api/types";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 
 type Props = {
   credential: CredentialApiResponse;
@@ -72,15 +72,16 @@ function DeleteCredentialButton({ credential }: Props) {
         <DialogHeader>
           <DialogTitle>{t("delete.title")}</DialogTitle>
         </DialogHeader>
-        <div
-          className="text-sm text-slate-400"
-          dangerouslySetInnerHTML={{
-            __html: t("delete.message", { name: credential.name }).replace(
-              credential.name,
-              `<span class="font-bold text-primary">${credential.name}</span>`,
-            ),
-          }}
-        />
+        <div className="text-sm text-slate-400">
+          <Trans
+            i18nKey="delete.message"
+            ns="credentials"
+            values={{ name: credential.name }}
+            components={{
+              strong: <strong className="font-bold text-primary" />,
+            }}
+          />
+        </div>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="secondary">{t("delete.cancelButton")}</Button>
