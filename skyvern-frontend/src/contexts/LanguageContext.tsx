@@ -29,13 +29,37 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const { i18n } = useTranslation();
 
   /**
+   * BCP47言語タグを基本言語コードに正規化
+   * 例: "ja-JP" -> "ja", "en-US" -> "en"
+   *
+   * @param langCode - 正規化する言語コード
+   * @returns サポートされている基本言語コード、またはnull
+   */
+  const normalizeLanguageCode = (langCode: string | null): string | null => {
+    if (!langCode) return null;
+
+    // 基本言語コードを取得（地域コードを除去）
+    const baseLang = (langCode.split("-")[0] || "").toLowerCase();
+
+    // サポートされている言語の中から最適なマッチを探す
+    if (SUPPORTED_LANGUAGES.includes(baseLang as never)) {
+      return baseLang;
+    }
+
+    return null;
+  };
+
+  /**
    * 言語設定の優先順位
    *
-   * 1. URLクエリパラメータ (?lng=ja) - 一時的な切り替え用
+   * 1. URLクエリパラメータ (?lng=ja または ?lng=ja-JP) - 一時的な切り替え用
    * 2. Cookie (i18next=ja) - クロスタブ共有可能
    * 3. localStorage (i18nextLng=ja) - Cookieのバックアップ
    * 4. ブラウザ言語 (navigator.language) - 初回訪問時
    * 5. デフォルト (en)
+   *
+   * 各ソースから取得した言語コードは正規化され、BCP47タグ（ja-JP, en-USなど）も
+   * 基本言語コード（ja, en）に変換されます。
    */
   useEffect(() => {
     const determineLanguage = (): string => {
@@ -45,8 +69,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
       // 優先度1: URLクエリパラメータ
       const urlParams = new URLSearchParams(window.location.search);
-      const urlLang = urlParams.get("lng");
-      if (urlLang && SUPPORTED_LANGUAGES.includes(urlLang as never)) {
+      const urlLang = normalizeLanguageCode(urlParams.get("lng"));
+      if (urlLang) {
         if (import.meta.env.DEV) {
           console.log("[LanguageContext] ✓ Using URL parameter:", urlLang);
         }
@@ -54,11 +78,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       }
 
       // 優先度2: Cookie（i18next-browser-languagedetectorが自動設定）
-      const cookieLang = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("i18next="))
-        ?.split("=")[1];
-      if (cookieLang && SUPPORTED_LANGUAGES.includes(cookieLang as never)) {
+      const cookieLang = normalizeLanguageCode(
+        document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("i18next="))
+          ?.split("=")[1] || null,
+      );
+      if (cookieLang) {
         if (import.meta.env.DEV) {
           console.log("[LanguageContext] ✓ Using Cookie:", cookieLang);
         }
@@ -66,8 +92,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       }
 
       // 優先度3: localStorage
-      const storedLang = localStorage.getItem("i18nextLng");
-      if (storedLang && SUPPORTED_LANGUAGES.includes(storedLang as never)) {
+      const storedLang = normalizeLanguageCode(
+        localStorage.getItem("i18nextLng"),
+      );
+      if (storedLang) {
         if (import.meta.env.DEV) {
           console.log("[LanguageContext] ✓ Using localStorage:", storedLang);
         }
@@ -75,8 +103,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       }
 
       // 優先度4: ブラウザ言語
-      const browserLang = navigator.language.split("-")[0];
-      if (browserLang && SUPPORTED_LANGUAGES.includes(browserLang as never)) {
+      const browserLang = normalizeLanguageCode(navigator.language);
+      if (browserLang) {
         if (import.meta.env.DEV) {
           console.log(
             "[LanguageContext] ✓ Using browser language:",
