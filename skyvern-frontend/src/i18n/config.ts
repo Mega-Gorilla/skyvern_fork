@@ -150,8 +150,8 @@ i18n
     // 開発環境のみデバッグ
     debug: import.meta.env.DEV,
 
-    // 欠落キー検知
-    saveMissing: true,
+    // 欠落キー検知（開発環境のみ）
+    saveMissing: import.meta.env.DEV,
     missingKeyHandler: (lngs, ns, key) => {
       const message = `Missing key: ${lngs[0]}/${ns}/${key}`;
 

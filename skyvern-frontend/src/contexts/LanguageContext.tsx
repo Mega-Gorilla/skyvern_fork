@@ -52,16 +52,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   };
 
   /**
-   * 言語設定の優先順位
+   * 言語設定の決定
    *
-   * 1. URLクエリパラメータ (?lng=ja または ?lng=ja-JP) - 一時的な切り替え用
-   * 2. Cookie (i18next=ja) - クロスタブ共有可能
-   * 3. localStorage (i18nextLng=ja) - Cookieのバックアップ
-   * 4. ブラウザ言語 (navigator.language) - 初回訪問時
+   * i18next-browser-languagedetector の標準機能を使用して言語を検出します。
+   * 優先順位は i18n/config.ts の detection.order で設定されています:
+   * 1. URLクエリパラメータ (?lng=ja または ?lng=ja-JP)
+   * 2. Cookie (i18next=ja)
+   * 3. localStorage (i18nextLng=ja)
+   * 4. ブラウザ言語 (navigator.language)
    * 5. デフォルト (en)
    *
-   * 各ソースから取得した言語コードは正規化され、BCP47タグ（ja-JP, en-USなど）も
-   * 基本言語コード（ja, en）に変換されます。
+   * BCP47タグ（ja-JP, en-USなど）は自動的に正規化されます。
    */
   useEffect(() => {
     const determineLanguage = (): SupportedLanguage => {
@@ -69,58 +70,39 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         console.log("[LanguageContext] Determining language...");
       }
 
-      // 優先度1: URLクエリパラメータ
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlLang = normalizeLanguageCode(urlParams.get("lng"));
-      if (urlLang) {
-        if (import.meta.env.DEV) {
-          console.log("[LanguageContext] ✓ Using URL parameter:", urlLang);
+      // i18next-browser-languagedetector の検出機能を使用
+      // これにより i18n/config.ts の設定と一致した言語検出が行われる
+      const detectedLang = i18n.services.languageDetector?.detect();
+
+      // 検出結果を正規化（BCP47タグ対応）
+      let targetLang: SupportedLanguage | null = null;
+
+      if (Array.isArray(detectedLang)) {
+        // 複数の候補がある場合、最初のサポート言語を使用
+        for (const lang of detectedLang) {
+          const normalized = normalizeLanguageCode(lang);
+          if (normalized) {
+            targetLang = normalized;
+            break;
+          }
         }
-        return urlLang;
+      } else if (typeof detectedLang === "string") {
+        targetLang = normalizeLanguageCode(detectedLang);
       }
 
-      // 優先度2: Cookie（i18next-browser-languagedetectorが自動設定）
-      const cookieLang = normalizeLanguageCode(
-        document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("i18next="))
-          ?.split("=")[1] || null,
-      );
-      if (cookieLang) {
-        if (import.meta.env.DEV) {
-          console.log("[LanguageContext] ✓ Using Cookie:", cookieLang);
-        }
-        return cookieLang;
-      }
+      // フォールバック: デフォルト言語
+      const finalLang = targetLang || "en";
 
-      // 優先度3: localStorage
-      const storedLang = normalizeLanguageCode(
-        localStorage.getItem("i18nextLng"),
-      );
-      if (storedLang) {
-        if (import.meta.env.DEV) {
-          console.log("[LanguageContext] ✓ Using localStorage:", storedLang);
-        }
-        return storedLang;
-      }
-
-      // 優先度4: ブラウザ言語
-      const browserLang = normalizeLanguageCode(navigator.language);
-      if (browserLang) {
-        if (import.meta.env.DEV) {
-          console.log(
-            "[LanguageContext] ✓ Using browser language:",
-            browserLang,
-          );
-        }
-        return browserLang;
-      }
-
-      // 優先度5: デフォルト
       if (import.meta.env.DEV) {
-        console.log("[LanguageContext] ✓ Using default: en");
+        console.log(
+          "[LanguageContext] Detected language:",
+          detectedLang,
+          "→ Using:",
+          finalLang,
+        );
       }
-      return "en";
+
+      return finalLang;
     };
 
     const targetLang = determineLanguage();
