@@ -1,0 +1,22 @@
+{
+  "fileUpload": {
+    "sizeLimitTitle": "ファイルサイズ上限超過",
+    "sizeLimitDescription": "アップロードしようとしているファイルが10MBの上限を超えています。別のファイルで再試行してください",
+    "uploadFailedTitle": "ファイルのアップロードに失敗しました",
+    "uploadFailedDescription": "ファイルのアップロード中にエラーが発生しました: {{message}}"
+  },
+  "api": {
+    "requestFailed": "リクエストが失敗しました",
+    "networkError": "ネットワークエラーが発生しました",
+    "unauthorized": "認証されていません",
+    "notFound": "リソースが見つかりません",
+    "serverError": "内部サーバーエラー"
+  },
+  "validation": {
+    "required": "この項目は必須です",
+    "invalidEmail": "無効なメールアドレスです",
+    "invalidUrl": "無効なURL形式です",
+    "minLength": "最小文字数は{{min}}文字です",
+    "maxLength": "最大文字数は{{max}}文字です"
+  }
+}

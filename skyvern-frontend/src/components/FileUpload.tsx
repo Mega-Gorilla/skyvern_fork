@@ -4,6 +4,7 @@ import { cn } from "@/util/utils";
 import { Cross2Icon, FileIcon, ReloadIcon } from "@radix-ui/react-icons";
 import { useMutation } from "@tanstack/react-query";
 import { useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -25,19 +26,19 @@ type Props = {
 
 const FILE_SIZE_LIMIT_IN_BYTES = 10 * 1024 * 1024; // 10 MB
 
-function showFileSizeError() {
-  toast({
-    variant: "destructive",
-    title: "File size limit exceeded",
-    description:
-      "The file you are trying to upload exceeds the 10MB limit, please try again with a different file",
-  });
-}
-
 function FileUpload({ value, onChange }: Props) {
   const credentialGetter = useCredentialGetter();
   const [file, setFile] = useState<File | null>(null);
   const inputId = useId();
+  const { t } = useTranslation("errors");
+
+  function showFileSizeError() {
+    toast({
+      variant: "destructive",
+      title: t("fileUpload.sizeLimitTitle"),
+      description: t("fileUpload.sizeLimitDescription"),
+    });
+  }
 
   const uploadFileMutation = useMutation({
     mutationFn: async (file: File) => {
@@ -68,8 +69,10 @@ function FileUpload({ value, onChange }: Props) {
       setFile(null);
       toast({
         variant: "destructive",
-        title: "Failed to upload file",
-        description: `An error occurred while uploading the file: ${error.message}`,
+        title: t("fileUpload.uploadFailedTitle"),
+        description: t("fileUpload.uploadFailedDescription", {
+          message: error.message,
+        }),
       });
     },
   });

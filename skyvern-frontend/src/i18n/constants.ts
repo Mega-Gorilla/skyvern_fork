@@ -7,7 +7,7 @@
  */
 
 export const SUPPORTED_LANGUAGES = ["en", "ja"] as const;
-export const SUPPORTED_NAMESPACES = ["common"] as const;
+export const SUPPORTED_NAMESPACES = ["common", "errors"] as const;
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 export type SupportedNamespace = (typeof SUPPORTED_NAMESPACES)[number];

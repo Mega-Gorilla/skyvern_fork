@@ -1,0 +1,22 @@
+{
+  "fileUpload": {
+    "sizeLimitTitle": "File size limit exceeded",
+    "sizeLimitDescription": "The file you are trying to upload exceeds the 10MB limit, please try again with a different file",
+    "uploadFailedTitle": "Failed to upload file",
+    "uploadFailedDescription": "An error occurred while uploading the file: {{message}}"
+  },
+  "api": {
+    "requestFailed": "Request failed",
+    "networkError": "Network error occurred",
+    "unauthorized": "Unauthorized access",
+    "notFound": "Resource not found",
+    "serverError": "Internal server error"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "invalidUrl": "Invalid URL format",
+    "minLength": "Minimum length is {{min}} characters",
+    "maxLength": "Maximum length is {{max}} characters"
+  }
+}
