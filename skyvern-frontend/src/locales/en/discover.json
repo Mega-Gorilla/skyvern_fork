@@ -1,0 +1,56 @@
+{
+  "promptBox": {
+    "question": "What task would you like to accomplish?",
+    "placeholder": "Enter your prompt...",
+    "versionLabels": {
+      "v1": "Skyvern 1.0",
+      "v1Description": "Best for simple tasks",
+      "v2": "Skyvern 2.0",
+      "v2Description": "Best for complex tasks",
+      "v2Code": "with code"
+    },
+    "advancedSettings": {
+      "title": "Advanced Settings",
+      "webhookUrl": "Webhook Callback URL",
+      "webhookUrlDescription": "The URL of a webhook endpoint to send the extracted information",
+      "testWebhook": "Test Webhook",
+      "proxyLocation": "Proxy Location",
+      "proxyLocationDescription": "Route Skyvern through one of our available proxies.",
+      "browserSessionId": "Browser Session ID",
+      "browserSessionIdDescription": "The ID of a persistent browser session",
+      "browserAddress": "Browser Address",
+      "browserAddressDescription": "The address of the Browser server to use for the task run.",
+      "twoFactorIdentifier": "2FA Identifier",
+      "twoFactorIdentifierDescription": "The identifier for a 2FA code for this task.",
+      "extraHttpHeaders": "Extra HTTP Headers",
+      "extraHttpHeadersDescription": "Specify some self defined HTTP requests headers in Dict format",
+      "addHeader": "Add Header",
+      "generateScript": "Generate Script",
+      "generateScriptDescription": "Whether to generate scripts for this task run (on success).",
+      "publishWorkflow": "Publish Workflow",
+      "publishWorkflowDescription": "Whether to create a workflow alongside this task run. Will also be created if \"Generate Scripts\" is true.",
+      "maxStepsOverride": "Max Steps Override",
+      "maxStepsOverrideDescription": "The maximum number of steps to take for this task.",
+      "dataSchema": "Data Schema",
+      "dataSchemaDescription": "Specify the output data schema in JSON format",
+      "maxScreenshotScrolls": "Max Screenshot Scrolls",
+      "maxScreenshotScrollsDescription": "The maximum number of scrolls for the post action screenshot. Default is {{default}}. If it's set to 0, it will take the current viewport screenshot."
+    },
+    "examples": {
+      "addToCart": "Add a product to cart",
+      "applyForJob": "Apply for a job",
+      "getInsuranceQuote": "Get an insurance quote",
+      "fillOutEDD": "Fill out CA's online EDD",
+      "fillContactForm": "Fill a contact us form",
+      "hackerNewsTop": "What's the top post on hackernews",
+      "searchAAPL": "Search for AAPL on Google Finance",
+      "topFootballTeam": "Get the top ranked football team",
+      "extractGongIntegrations": "Extract Integrations from Gong.io"
+    },
+    "toasts": {
+      "workflowCreated": "Workflow Created",
+      "workflowCreatedDescription": "Workflow created successfully.",
+      "errorCreatingWorkflow": "Error creating workflow from prompt"
+    }
+  }
+}

@@ -11,6 +11,7 @@ import enSettings from "../locales/en/settings.json";
 import enCredentials from "../locales/en/credentials.json";
 import enBrowserSessions from "../locales/en/browserSessions.json";
 import enHistory from "../locales/en/history.json";
+import enDiscover from "../locales/en/discover.json";
 
 // 共通定数をインポート
 import {
@@ -126,6 +127,7 @@ i18n
         credentials: enCredentials,
         browserSessions: enBrowserSessions,
         history: enHistory,
+        discover: enDiscover,
       },
     },
 

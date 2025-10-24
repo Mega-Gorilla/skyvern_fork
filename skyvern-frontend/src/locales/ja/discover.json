@@ -1,0 +1,56 @@
+{
+  "promptBox": {
+    "question": "どのタスクを実行しますか？",
+    "placeholder": "プロンプトを入力...",
+    "versionLabels": {
+      "v1": "Skyvern 1.0",
+      "v1Description": "シンプルなタスクに最適",
+      "v2": "Skyvern 2.0",
+      "v2Description": "複雑なタスクに最適",
+      "v2Code": "コード生成機能付き"
+    },
+    "advancedSettings": {
+      "title": "詳細設定",
+      "webhookUrl": "Webhook コールバック URL",
+      "webhookUrlDescription": "抽出された情報を送信するWebhookエンドポイントのURL",
+      "testWebhook": "Webhookをテスト",
+      "proxyLocation": "プロキシロケーション",
+      "proxyLocationDescription": "利用可能なプロキシのいずれかを経由してSkyvernをルーティングします。",
+      "browserSessionId": "ブラウザーセッション ID",
+      "browserSessionIdDescription": "永続的なブラウザーセッションのID",
+      "browserAddress": "ブラウザーアドレス",
+      "browserAddressDescription": "タスク実行に使用するブラウザーサーバーのアドレス。",
+      "twoFactorIdentifier": "二要素認証識別子",
+      "twoFactorIdentifierDescription": "このタスクの二要素認証コードの識別子。",
+      "extraHttpHeaders": "追加HTTPヘッダー",
+      "extraHttpHeadersDescription": "カスタム定義のHTTPリクエストヘッダーを辞書形式で指定",
+      "addHeader": "ヘッダーを追加",
+      "generateScript": "スクリプトを生成",
+      "generateScriptDescription": "このタスク実行のスクリプトを生成するかどうか（成功時）。",
+      "publishWorkflow": "ワークフローを公開",
+      "publishWorkflowDescription": "このタスク実行と共にワークフローを作成するかどうか。「スクリプトを生成」がtrueの場合も作成されます。",
+      "maxStepsOverride": "最大ステップ数の上書き",
+      "maxStepsOverrideDescription": "このタスクで実行する最大ステップ数。",
+      "dataSchema": "データスキーマ",
+      "dataSchemaDescription": "出力データスキーマをJSON形式で指定",
+      "maxScreenshotScrolls": "最大スクリーンショットスクロール数",
+      "maxScreenshotScrollsDescription": "アクション後のスクリーンショットの最大スクロール数。デフォルトは{{default}}です。0に設定すると、現在のビューポートのスクリーンショットを撮影します。"
+    },
+    "examples": {
+      "addToCart": "カートに商品を追加",
+      "applyForJob": "求人に応募",
+      "getInsuranceQuote": "保険の見積もりを取得",
+      "fillOutEDD": "カリフォルニア州EDDフォームに記入",
+      "fillContactForm": "お問い合わせフォームに記入",
+      "hackerNewsTop": "Hacker Newsのトップ投稿を取得",
+      "searchAAPL": "Google FinanceでAAPLを検索",
+      "topFootballTeam": "FIFAランキング1位のチームを取得",
+      "extractGongIntegrations": "Gong.ioの統合機能を抽出"
+    },
+    "toasts": {
+      "workflowCreated": "ワークフローが作成されました",
+      "workflowCreatedDescription": "ワークフローが正常に作成されました。",
+      "errorCreatingWorkflow": "プロンプトからのワークフロー作成エラー"
+    }
+  }
+}

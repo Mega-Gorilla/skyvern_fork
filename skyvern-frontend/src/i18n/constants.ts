@@ -16,6 +16,7 @@ export const SUPPORTED_NAMESPACES = [
   "credentials",
   "browserSessions",
   "history",
+  "discover",
 ] as const;
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
