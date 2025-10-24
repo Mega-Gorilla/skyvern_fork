@@ -16,9 +16,15 @@
     "menu": "メニュー"
   },
   "navigation": {
-    "tasks": "タスク",
+    "build": "構築",
+    "discover": "発見",
     "workflows": "ワークフロー",
+    "history": "履歴",
+    "browsers": "ブラウザ",
+    "general": "一般",
     "settings": "設定",
+    "credentials": "認証情報",
+    "tasks": "タスク",
     "documentation": "ドキュメント"
   },
   "status": {

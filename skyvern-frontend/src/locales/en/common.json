@@ -16,9 +16,15 @@
     "menu": "Menu"
   },
   "navigation": {
-    "tasks": "Tasks",
+    "build": "Build",
+    "discover": "Discover",
     "workflows": "Workflows",
+    "history": "History",
+    "browsers": "Browsers",
+    "general": "General",
     "settings": "Settings",
+    "credentials": "Credentials",
+    "tasks": "Tasks",
     "documentation": "Documentation"
   },
   "status": {
