@@ -12,6 +12,7 @@ export const SUPPORTED_NAMESPACES = [
   "errors",
   "workflows",
   "tasks",
+  "settings",
 ] as const;
 
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];

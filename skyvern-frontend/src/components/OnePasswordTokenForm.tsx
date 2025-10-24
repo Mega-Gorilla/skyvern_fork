@@ -14,17 +14,22 @@ import {
 } from "@/components/ui/form";
 import { useOnePasswordToken } from "@/hooks/useOnePasswordToken";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
+import { useTranslation } from "react-i18next";
 
-const formSchema = z.object({
-  token: z.string().min(1, "1Password token is required"),
-});
-
-type FormData = z.infer<typeof formSchema>;
+function FormSchema(t: (key: string) => string) {
+  return z.object({
+    token: z.string().min(1, t("onePassword.required")),
+  });
+}
 
 export function OnePasswordTokenForm() {
+  const { t } = useTranslation("settings");
   const [showToken, setShowToken] = useState(false);
   const { onePasswordToken, isLoading, createOrUpdateToken, isUpdating } =
     useOnePasswordToken();
+
+  const formSchema = FormSchema(t);
+  type FormData = z.infer<typeof formSchema>;
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -53,21 +58,22 @@ export function OnePasswordTokenForm() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-medium">
-            1Password Service Account Token
-          </h3>
+          <h3 className="text-lg font-medium">{t("onePassword.title")}</h3>
           <p className="text-sm text-muted-foreground">
-            Configure your 1Password service account token for credential
-            management.
+            {t("onePassword.description")}
           </p>
         </div>
         {onePasswordToken && (
           <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Status:</span>
+            <span className="text-sm text-muted-foreground">
+              {t("onePassword.status")}
+            </span>
             <span
               className={`text-sm ${onePasswordToken.valid ? "text-green-600" : "text-red-600"}`}
             >
-              {onePasswordToken.valid ? "Active" : "Inactive"}
+              {onePasswordToken.valid
+                ? t("onePassword.active")
+                : t("onePassword.inactive")}
             </span>
           </div>
         )}
@@ -80,13 +86,13 @@ export function OnePasswordTokenForm() {
             name="token"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Service Account Token</FormLabel>
+                <FormLabel>{t("onePassword.formLabel")}</FormLabel>
                 <div className="relative">
                   <FormControl>
                     <Input
                       {...field}
                       type={showToken ? "text" : "password"}
-                      placeholder="op_1234567890abcdef"
+                      placeholder={t("onePassword.placeholder")}
                       disabled={isLoading || isUpdating}
                     />
                   </FormControl>
@@ -112,11 +118,13 @@ export function OnePasswordTokenForm() {
 
           <div className="flex items-center gap-4">
             <Button type="submit" disabled={isLoading || isUpdating}>
-              {isUpdating ? "Updating..." : "Update Token"}
+              {isUpdating
+                ? t("onePassword.updating")
+                : t("onePassword.updateButton")}
             </Button>
             {onePasswordToken && (
               <div className="text-sm text-muted-foreground">
-                Last updated:{" "}
+                {t("onePassword.lastUpdated")}{" "}
                 {new Date(onePasswordToken.modified_at).toLocaleDateString()}
               </div>
             )}
@@ -126,12 +134,18 @@ export function OnePasswordTokenForm() {
 
       {onePasswordToken && (
         <div className="rounded-md bg-muted p-4">
-          <h4 className="mb-2 text-sm font-medium">Token Information</h4>
+          <h4 className="mb-2 text-sm font-medium">
+            {t("onePassword.tokenInfo.title")}
+          </h4>
           <div className="space-y-1 text-sm text-muted-foreground">
-            <div>ID: {onePasswordToken.id}</div>
-            <div>Type: {onePasswordToken.token_type}</div>
             <div>
-              Created:{" "}
+              {t("onePassword.tokenInfo.id")} {onePasswordToken.id}
+            </div>
+            <div>
+              {t("onePassword.tokenInfo.type")} {onePasswordToken.token_type}
+            </div>
+            <div>
+              {t("onePassword.tokenInfo.created")}{" "}
               {new Date(onePasswordToken.created_at).toLocaleDateString()}
             </div>
           </div>

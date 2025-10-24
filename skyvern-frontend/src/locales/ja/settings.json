@@ -1,0 +1,72 @@
+{
+  "pageTitle": "設定",
+  "pageDescription": "環境と組織を選択できます",
+  "environment": {
+    "label": "環境",
+    "placeholder": "環境"
+  },
+  "organization": {
+    "label": "組織",
+    "placeholder": "組織"
+  },
+  "apiKey": {
+    "title": "APIキー",
+    "description": "現在有効なAPIキー",
+    "notFound": "APIキーが見つかりません"
+  },
+  "onePassword": {
+    "cardTitle": "1Password連携",
+    "cardDescription": "1Passwordサービスアカウントトークンを管理します。",
+    "learnMore": "サービスアカウントの作成とトークンの取得方法を確認する。",
+    "title": "1Passwordサービスアカウントトークン",
+    "description": "認証情報管理のための1Passwordサービスアカウントトークンを設定します。",
+    "status": "ステータス:",
+    "active": "有効",
+    "inactive": "無効",
+    "formLabel": "サービスアカウントトークン",
+    "placeholder": "op_1234567890abcdef",
+    "required": "1Passwordトークンは必須です",
+    "updateButton": "トークンを更新",
+    "updating": "更新中...",
+    "lastUpdated": "最終更新:",
+    "tokenInfo": {
+      "title": "トークン情報",
+      "id": "ID:",
+      "type": "タイプ:",
+      "created": "作成日:"
+    }
+  },
+  "azure": {
+    "cardTitle": "Azure連携",
+    "cardDescription": "Azure連携を管理します",
+    "title": "Azureクライアントシークレット認証情報",
+    "description": "Azureアカウントへのアクセス権を付与するために、Azureクライアントシークレット認証情報を設定します。",
+    "status": "ステータス:",
+    "active": "有効",
+    "inactive": "無効",
+    "tenantId": {
+      "label": "テナントID",
+      "placeholder": "tenant_id",
+      "required": "tenant_idは必須です"
+    },
+    "clientId": {
+      "label": "クライアントID",
+      "placeholder": "client_id",
+      "required": "client_idは必須です"
+    },
+    "clientSecret": {
+      "label": "クライアントシークレット",
+      "placeholder": "client_secret",
+      "required": "client_secretは必須です"
+    },
+    "updateButton": "認証情報を更新",
+    "updating": "更新中...",
+    "lastUpdated": "最終更新:",
+    "credentialInfo": {
+      "title": "認証情報",
+      "id": "ID:",
+      "type": "タイプ:",
+      "created": "作成日:"
+    }
+  }
+}

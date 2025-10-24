@@ -18,8 +18,10 @@ import { getRuntimeApiKey } from "@/util/env";
 import { HiddenCopyableInput } from "@/components/ui/hidden-copyable-input";
 import { OnePasswordTokenForm } from "@/components/OnePasswordTokenForm";
 import { AzureClientSecretCredentialTokenForm } from "@/components/AzureClientSecretCredentialTokenForm";
+import { useTranslation } from "react-i18next";
 
 function Settings() {
+  const { t } = useTranslation("settings");
   const { environment, organization, setEnvironment, setOrganization } =
     useSettingsStore();
   const apiKey = getRuntimeApiKey();
@@ -28,18 +30,18 @@ function Settings() {
     <div className="flex flex-col gap-8">
       <Card>
         <CardHeader className="border-b-2">
-          <CardTitle className="text-lg">Settings</CardTitle>
-          <CardDescription>
-            You can select environment and organization here
-          </CardDescription>
+          <CardTitle className="text-lg">{t("pageTitle")}</CardTitle>
+          <CardDescription>{t("pageDescription")}</CardDescription>
         </CardHeader>
         <CardContent className="p-8">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4">
-              <Label className="w-36 whitespace-nowrap">Environment</Label>
+              <Label className="w-36 whitespace-nowrap">
+                {t("environment.label")}
+              </Label>
               <Select value={environment} onValueChange={setEnvironment}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Environment" />
+                  <SelectValue placeholder={t("environment.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="local">local</SelectItem>
@@ -47,10 +49,12 @@ function Settings() {
               </Select>
             </div>
             <div className="flex items-center gap-4">
-              <Label className="w-36 whitespace-nowrap">Organization</Label>
+              <Label className="w-36 whitespace-nowrap">
+                {t("organization.label")}
+              </Label>
               <Select value={organization} onValueChange={setOrganization}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Organization" />
+                  <SelectValue placeholder={t("organization.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="skyvern">Skyvern</SelectItem>
@@ -62,25 +66,27 @@ function Settings() {
       </Card>
       <Card>
         <CardHeader className="border-b-2">
-          <CardTitle className="text-lg">API Key</CardTitle>
-          <CardDescription>Currently active API key</CardDescription>
+          <CardTitle className="text-lg">{t("apiKey.title")}</CardTitle>
+          <CardDescription>{t("apiKey.description")}</CardDescription>
         </CardHeader>
         <CardContent className="p-8">
-          <HiddenCopyableInput value={apiKey ?? "API key not found"} />
+          <HiddenCopyableInput value={apiKey ?? t("apiKey.notFound")} />
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="border-b-2">
-          <CardTitle className="text-lg">1Password Integration</CardTitle>
+          <CardTitle className="text-lg">
+            {t("onePassword.cardTitle")}
+          </CardTitle>
           <CardDescription>
-            Manage your 1Password service account token.{" "}
+            {t("onePassword.cardDescription")}{" "}
             <a
               href="https://developer.1password.com/docs/service-accounts/get-started/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 underline"
             >
-              Learn how to create a service account and get your token.
+              {t("onePassword.learnMore")}
             </a>
           </CardDescription>
         </CardHeader>
@@ -90,8 +96,8 @@ function Settings() {
       </Card>
       <Card>
         <CardHeader className="border-b-2">
-          <CardTitle className="text-lg">Azure Integration</CardTitle>
-          <CardDescription>Manage your Azure integration</CardDescription>
+          <CardTitle className="text-lg">{t("azure.cardTitle")}</CardTitle>
+          <CardDescription>{t("azure.cardDescription")}</CardDescription>
         </CardHeader>
         <CardContent className="p-8">
           <AzureClientSecretCredentialTokenForm />
