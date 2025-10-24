@@ -1,4 +1,5 @@
 import { LightningBoltIcon } from "@radix-ui/react-icons";
+import { useTranslation } from "react-i18next";
 
 import { Tip } from "@/components/Tip";
 import { Status, Task, WorkflowRunApiResponse } from "@/api/types";
@@ -35,6 +36,7 @@ function isTask(run: Task | WorkflowRunApiResponse): run is Task {
 }
 
 function RunHistory() {
+  const { t } = useTranslation("history");
   const credentialGetter = useCredentialGetter();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
@@ -101,7 +103,7 @@ function RunHistory() {
   return (
     <div className="space-y-4">
       <div className="flex justify-between">
-        <h1 className="text-2xl">Run History</h1>
+        <h1 className="text-2xl">{t("page.title")}</h1>
         <StatusFilterDropdown
           values={statusFilters}
           onChange={setStatusFilters}
@@ -112,12 +114,16 @@ function RunHistory() {
           <TableHeader className="rounded-t-lg bg-slate-elevation2">
             <TableRow>
               <TableHead className="w-1/4 rounded-tl-lg text-slate-400">
-                Run ID
+                {t("table.headers.runId")}
               </TableHead>
-              <TableHead className="w-1/4 text-slate-400">Detail</TableHead>
-              <TableHead className="w-1/4 text-slate-400">Status</TableHead>
+              <TableHead className="w-1/4 text-slate-400">
+                {t("table.headers.detail")}
+              </TableHead>
+              <TableHead className="w-1/4 text-slate-400">
+                {t("table.headers.status")}
+              </TableHead>
               <TableHead className="w-1/4 rounded-tr-lg text-slate-400">
-                Created At
+                {t("table.headers.createdAt")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -133,7 +139,7 @@ function RunHistory() {
             ) : runs?.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4}>
-                  <div className="text-center">No runs found</div>
+                  <div className="text-center">{t("table.noRunsFound")}</div>
                 </TableCell>
               </TableRow>
             ) : (
@@ -169,7 +175,7 @@ function RunHistory() {
                 const workflowTitle =
                   run.script_run === true ? (
                     <div className="flex items-center gap-2">
-                      <Tip content="Ran with code">
+                      <Tip content={t("table.scriptRunTooltip")}>
                         <LightningBoltIcon className="text-[gold]" />
                       </Tip>
                       <span>{run.workflow_title ?? ""}</span>
@@ -218,7 +224,9 @@ function RunHistory() {
         </Table>
         <div className="relative px-3 py-3">
           <div className="absolute left-3 top-1/2 flex -translate-y-1/2 items-center gap-2 text-sm">
-            <span className="text-slate-400">Items per page</span>
+            <span className="text-slate-400">
+              {t("pagination.itemsPerPage")}
+            </span>
             <select
               className="h-9 rounded-md border border-slate-300 bg-background px-3"
               value={itemsPerPage}

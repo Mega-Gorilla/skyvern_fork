@@ -1,0 +1,18 @@
+{
+  "page": {
+    "title": "Run History"
+  },
+  "table": {
+    "headers": {
+      "runId": "Run ID",
+      "detail": "Detail",
+      "status": "Status",
+      "createdAt": "Created At"
+    },
+    "noRunsFound": "No runs found",
+    "scriptRunTooltip": "Ran with code"
+  },
+  "pagination": {
+    "itemsPerPage": "Items per page"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "page": {
+    "title": "実行履歴"
+  },
+  "table": {
+    "headers": {
+      "runId": "実行ID",
+      "detail": "詳細",
+      "status": "ステータス",
+      "createdAt": "作成日時"
+    },
+    "noRunsFound": "実行履歴が見つかりません",
+    "scriptRunTooltip": "コードで実行"
+  },
+  "pagination": {
+    "itemsPerPage": "ページあたりの項目数"
+  }
+}
