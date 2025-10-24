@@ -2,6 +2,7 @@ import { DropdownWithOptions } from "@/components/DropdownWithOptions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   values: {
@@ -22,19 +23,6 @@ type Props = {
   }) => void;
 };
 
-const brandOptions = [
-  "Visa",
-  "Mastercard",
-  "American Express",
-  "Discover",
-  "JCB",
-  "Diners Club",
-  "Maestro",
-  "UnionPay",
-  "RuPay",
-  "Other",
-];
-
 function formatCardNumber(cardNumber: string) {
   // put spaces every 4 digits
   return cardNumber.replace(/(\d{4})(?=\d)/g, "$1 ");
@@ -46,13 +34,28 @@ function formatCardExpirationDate(cardExpirationDate: string) {
 }
 
 function CreditCardCredentialContent({ values, onChange }: Props) {
+  const { t } = useTranslation("credentials");
+
+  const brandOptions = [
+    { value: "Visa", label: t("creditCard.brands.visa") },
+    { value: "Mastercard", label: t("creditCard.brands.mastercard") },
+    { value: "American Express", label: t("creditCard.brands.amex") },
+    { value: "Discover", label: t("creditCard.brands.discover") },
+    { value: "JCB", label: t("creditCard.brands.jcb") },
+    { value: "Diners Club", label: t("creditCard.brands.dinersClub") },
+    { value: "Maestro", label: t("creditCard.brands.maestro") },
+    { value: "UnionPay", label: t("creditCard.brands.unionPay") },
+    { value: "RuPay", label: t("creditCard.brands.rupay") },
+    { value: "Other", label: t("creditCard.brands.other") },
+  ];
+
   return (
     <div className="space-y-4">
       <div className="flex">
         <div className="w-72 shrink-0 space-y-1">
-          <div>Name</div>
+          <div>{t("creditCard.name")}</div>
           <div className="text-sm text-slate-400">
-            The name of the credential
+            {t("creditCard.nameDescription")}
           </div>
         </div>
         <Input
@@ -62,7 +65,7 @@ function CreditCardCredentialContent({ values, onChange }: Props) {
       </div>
       <Separator />
       <div className="space-y-2">
-        <Label>Cardholder Name</Label>
+        <Label>{t("creditCard.cardholderName")}</Label>
         <Input
           value={values.cardHolderName}
           onChange={(e) =>
@@ -71,7 +74,7 @@ function CreditCardCredentialContent({ values, onChange }: Props) {
         />
       </div>
       <div className="space-y-2">
-        <Label>Number</Label>
+        <Label>{t("creditCard.number")}</Label>
         <Input
           value={values.cardNumber}
           onChange={(event) => {
@@ -87,20 +90,17 @@ function CreditCardCredentialContent({ values, onChange }: Props) {
         />
       </div>
       <div className="space-y-2">
-        <Label>Brand</Label>
+        <Label>{t("creditCard.brand")}</Label>
         <DropdownWithOptions
-          options={brandOptions.map((brand) => ({
-            label: brand,
-            value: brand,
-          }))}
+          options={brandOptions}
           value={values.cardBrand}
           onChange={(value) => onChange({ ...values, cardBrand: value })}
-          placeholder="Select Brand"
+          placeholder={t("creditCard.selectBrand")}
         />
       </div>
       <div className="flex gap-2">
         <div className="space-y-2">
-          <Label>Expiration</Label>
+          <Label>{t("creditCard.expiration")}</Label>
           <Input
             value={values.cardExpirationDate}
             onChange={(event) => {
@@ -117,7 +117,7 @@ function CreditCardCredentialContent({ values, onChange }: Props) {
           />
         </div>
         <div className="space-y-2">
-          <Label>CVV</Label>
+          <Label>{t("creditCard.cvv")}</Label>
           <Input
             value={values.cardCode}
             onChange={(event) => {

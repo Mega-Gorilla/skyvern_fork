@@ -21,6 +21,7 @@ import { toast } from "@/components/ui/use-toast";
 import { AxiosError } from "axios";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useCredentialsQuery } from "@/routes/workflows/hooks/useCredentialsQuery";
+import { useTranslation } from "react-i18next";
 
 const PASSWORD_CREDENTIAL_INITIAL_VALUES = {
   name: "",
@@ -62,6 +63,7 @@ type Props = {
 };
 
 function CredentialsModal({ onCredentialCreated }: Props) {
+  const { t } = useTranslation("credentials");
   const credentialGetter = useCredentialGetter();
   const queryClient = useQueryClient();
   const { isOpen, type, setIsOpen } = useCredentialModalState();
@@ -107,8 +109,8 @@ function CredentialsModal({ onCredentialCreated }: Props) {
         queryKey: ["credentials"],
       });
       toast({
-        title: "Credential created",
-        description: "Your credential has been created successfully",
+        title: t("modal.success.title"),
+        description: t("modal.success.description"),
         variant: "success",
       });
       onCredentialCreated?.(data.credential_id);
@@ -116,7 +118,7 @@ function CredentialsModal({ onCredentialCreated }: Props) {
     onError: (error: AxiosError) => {
       const detail = (error.response?.data as { detail?: string })?.detail;
       toast({
-        title: "Error",
+        title: t("modal.errors.title"),
         description: detail ? detail : error.message,
         variant: "destructive",
       });
@@ -130,8 +132,8 @@ function CredentialsModal({ onCredentialCreated }: Props) {
         : creditCardCredentialValues.name.trim();
     if (name === "") {
       toast({
-        title: "Error",
-        description: "Name is required",
+        title: t("modal.errors.title"),
+        description: t("modal.errors.nameRequired"),
         variant: "destructive",
       });
       return;
@@ -144,8 +146,8 @@ function CredentialsModal({ onCredentialCreated }: Props) {
 
       if (username === "" || password === "") {
         toast({
-          title: "Error",
-          description: "Username and password are required",
+          title: t("modal.errors.title"),
+          description: t("modal.errors.usernamePasswordRequired"),
           variant: "destructive",
         });
         return;
@@ -176,8 +178,8 @@ function CredentialsModal({ onCredentialCreated }: Props) {
         cardHolderName === ""
       ) {
         toast({
-          title: "Error",
-          description: "All credit card fields are required",
+          title: t("modal.errors.title"),
+          description: t("modal.errors.allFieldsRequired"),
           variant: "destructive",
         });
         return;
@@ -186,8 +188,8 @@ function CredentialsModal({ onCredentialCreated }: Props) {
       const cardExpirationDateParts = cardExpirationDate.split("/");
       if (cardExpirationDateParts.length !== 2) {
         toast({
-          title: "Error",
-          description: "Invalid card expiration date",
+          title: t("modal.errors.title"),
+          description: t("modal.errors.invalidExpirationDate"),
           variant: "destructive",
         });
         return;
@@ -196,8 +198,8 @@ function CredentialsModal({ onCredentialCreated }: Props) {
       const cardExpirationYear = cardExpirationDateParts[1];
       if (!cardExpirationMonth || !cardExpirationYear) {
         toast({
-          title: "Error",
-          description: "Invalid card expiration date",
+          title: t("modal.errors.title"),
+          description: t("modal.errors.invalidExpirationDate"),
           variant: "destructive",
         });
         return;
@@ -231,7 +233,7 @@ function CredentialsModal({ onCredentialCreated }: Props) {
     >
       <DialogContent className="w-[700px] max-w-[700px]">
         <DialogHeader>
-          <DialogTitle className="font-bold">Add Credential</DialogTitle>
+          <DialogTitle className="font-bold">{t("modal.title")}</DialogTitle>
         </DialogHeader>
         {type === CredentialModalTypes.PASSWORD ? (
           <PasswordCredentialContent
@@ -252,7 +254,7 @@ function CredentialsModal({ onCredentialCreated }: Props) {
             {createCredentialMutation.isPending ? (
               <ReloadIcon className="mr-2 size-4 animate-spin" />
             ) : null}
-            Save
+            {t("modal.saveButton")}
           </Button>
         </DialogFooter>
       </DialogContent>

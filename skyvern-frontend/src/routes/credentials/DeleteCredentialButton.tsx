@@ -19,11 +19,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { ReloadIcon, TrashIcon } from "@radix-ui/react-icons";
 import { CredentialApiResponse } from "@/api/types";
+import { useTranslation } from "react-i18next";
+
 type Props = {
   credential: CredentialApiResponse;
 };
 
 function DeleteCredentialButton({ credential }: Props) {
+  const { t } = useTranslation("credentials");
   const credentialGetter = useCredentialGetter();
   const queryClient = useQueryClient();
 
@@ -37,15 +40,15 @@ function DeleteCredentialButton({ credential }: Props) {
         queryKey: ["credentials"],
       });
       toast({
-        title: "Credential deleted",
+        title: t("delete.success.title"),
         variant: "success",
-        description: "The credential has been deleted.",
+        description: t("delete.success.description"),
       });
     },
     onError: (error: AxiosError) => {
       toast({
         variant: "destructive",
-        title: "Failed to delete credential",
+        title: t("delete.error.title"),
         description: error.message,
       });
     },
@@ -62,22 +65,25 @@ function DeleteCredentialButton({ credential }: Props) {
               </Button>
             </DialogTrigger>
           </TooltipTrigger>
-          <TooltipContent>Delete Credential</TooltipContent>
+          <TooltipContent>{t("delete.tooltip")}</TooltipContent>
         </Tooltip>
       </TooltipProvider>
       <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
-          <DialogTitle>Are you sure?</DialogTitle>
+          <DialogTitle>{t("delete.title")}</DialogTitle>
         </DialogHeader>
-        <div className="text-sm text-slate-400">
-          The credential{" "}
-          <span className="font-bold text-primary">{credential.name}</span> will
-          be PERMANENTLY deleted. The Skyvern team has no way to restore a
-          credential once it's deleted.
-        </div>
+        <div
+          className="text-sm text-slate-400"
+          dangerouslySetInnerHTML={{
+            __html: t("delete.message", { name: credential.name }).replace(
+              credential.name,
+              `<span class="font-bold text-primary">${credential.name}</span>`,
+            ),
+          }}
+        />
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary">{t("delete.cancelButton")}</Button>
           </DialogClose>
           <Button
             variant="destructive"
@@ -89,7 +95,7 @@ function DeleteCredentialButton({ credential }: Props) {
             {deleteCredentialMutation.isPending && (
               <ReloadIcon className="mr-2 size-4 animate-spin" />
             )}
-            Delete
+            {t("delete.deleteButton")}
           </Button>
         </DialogFooter>
       </DialogContent>
