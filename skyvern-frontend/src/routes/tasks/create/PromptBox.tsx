@@ -260,11 +260,11 @@ function PromptBox() {
                       <div className="flex items-center gap-1">
                         <LightningBoltIcon className="size-4 shrink-0 text-yellow-400" />
                         <div className="font-normal text-white">
-                          Skyvern 2.0
+                          {t("promptBox.versionLabels.v2")}
                         </div>
                       </div>
                       <div className="self-start pl-7 text-xs font-semibold text-yellow-400">
-                        with code
+                        {t("promptBox.versionLabels.v2Code")}
                       </div>
                     </div>
                   ) : (
@@ -275,20 +275,24 @@ function PromptBox() {
                   <CustomSelectItem value="v1">
                     <div className="space-y-2">
                       <div>
-                        <SelectItemText>Skyvern 1.0</SelectItemText>
+                        <SelectItemText>
+                          {t("promptBox.versionLabels.v1")}
+                        </SelectItemText>
                       </div>
                       <div className="text-xs text-slate-400">
-                        Best for simple tasks
+                        {t("promptBox.versionLabels.v1Description")}
                       </div>
                     </div>
                   </CustomSelectItem>
                   <CustomSelectItem value="v2" className="hover:bg-slate-800">
                     <div className="space-y-2">
                       <div>
-                        <SelectItemText>Skyvern 2.0</SelectItemText>
+                        <SelectItemText>
+                          {t("promptBox.versionLabels.v2")}
+                        </SelectItemText>
                       </div>
                       <div className="text-xs text-slate-400">
-                        Best for complex tasks
+                        {t("promptBox.versionLabels.v2Description")}
                       </div>
                     </div>
                   </CustomSelectItem>
@@ -301,12 +305,12 @@ function PromptBox() {
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
                           <SelectItemText className="animate-pulse bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-400 bg-clip-text font-bold text-transparent">
-                            Skyvern 2.0
+                            {t("promptBox.versionLabels.v2")}
                           </SelectItemText>
                           <LightningBoltIcon className="size-4 animate-bounce text-yellow-400" />
                         </div>
                         <div className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-400 bg-clip-text text-xs font-semibold text-transparent">
-                          with code
+                          {t("promptBox.versionLabels.v2Code")}
                         </div>
                       </div>
                     </div>
@@ -346,13 +350,14 @@ function PromptBox() {
             {showAdvancedSettings ? (
               <div className="rounded-b-lg px-2">
                 <div className="space-y-4 rounded-b-xl bg-slate-900 p-4">
-                  <header>Advanced Settings</header>
+                  <header>{t("promptBox.advancedSettings.title")}</header>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Webhook Callback URL</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.webhookUrl")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        The URL of a webhook endpoint to send the extracted
-                        information
+                        {t("promptBox.advancedSettings.webhookUrlDescription")}
                       </div>
                     </div>
                     <div className="flex flex-col gap-2">
@@ -374,7 +379,7 @@ function PromptBox() {
                             className="self-start"
                             disabled={!webhookCallbackUrl}
                           >
-                            Test Webhook
+                            {t("promptBox.advancedSettings.testWebhook")}
                           </Button>
                         }
                       />
@@ -382,9 +387,13 @@ function PromptBox() {
                   </div>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Proxy Location</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.proxyLocation")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        Route Skyvern through one of our available proxies.
+                        {t(
+                          "promptBox.advancedSettings.proxyLocationDescription",
+                        )}
                       </div>
                     </div>
                     <ProxySelector
@@ -394,9 +403,13 @@ function PromptBox() {
                   </div>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Browser Session ID</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.browserSessionId")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        The ID of a persistent browser session
+                        {t(
+                          "promptBox.advancedSettings.browserSessionIdDescription",
+                        )}
                       </div>
                     </div>
                     <Input
@@ -409,10 +422,13 @@ function PromptBox() {
                   </div>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Browser Address</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.browserAddress")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        The address of the Browser server to use for the task
-                        run.
+                        {t(
+                          "promptBox.advancedSettings.browserAddressDescription",
+                        )}
                       </div>
                     </div>
                     <Input
@@ -425,9 +441,13 @@ function PromptBox() {
                   </div>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">2FA Identifier</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.twoFactorIdentifier")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        The identifier for a 2FA code for this task.
+                        {t(
+                          "promptBox.advancedSettings.twoFactorIdentifierDescription",
+                        )}
                       </div>
                     </div>
                     <Input
@@ -439,10 +459,13 @@ function PromptBox() {
                   </div>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Extra HTTP Headers</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.extraHttpHeaders")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        Specify some self defined HTTP requests headers in Dict
-                        format
+                        {t(
+                          "promptBox.advancedSettings.extraHttpHeadersDescription",
+                        )}
                       </div>
                     </div>
                     <div className="flex-1">
@@ -457,17 +480,22 @@ function PromptBox() {
                                 : JSON.stringify(val),
                           )
                         }
-                        addButtonText="Add Header"
+                        addButtonText={t(
+                          "promptBox.advancedSettings.addHeader",
+                        )}
                       />
                     </div>
                   </div>
 
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Generate Script</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.generateScript")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        Whether to generate scripts for this task run (on
-                        success).
+                        {t(
+                          "promptBox.advancedSettings.generateScriptDescription",
+                        )}
                       </div>
                     </div>
                     <Switch
@@ -479,10 +507,13 @@ function PromptBox() {
                   </div>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Publish Workflow</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.publishWorkflow")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        Whether to create a workflow alongside this task run.
-                        Will also be created if "Generate Scripts" is true.
+                        {t(
+                          "promptBox.advancedSettings.publishWorkflowDescription",
+                        )}
                       </div>
                     </div>
                     <Switch
@@ -494,9 +525,13 @@ function PromptBox() {
                   </div>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Max Steps Override</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.maxStepsOverride")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        The maximum number of steps to take for this task.
+                        {t(
+                          "promptBox.advancedSettings.maxStepsOverrideDescription",
+                        )}
                       </div>
                     </div>
                     <Input
@@ -509,9 +544,11 @@ function PromptBox() {
                   </div>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Data Schema</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.dataSchema")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        Specify the output data schema in JSON format
+                        {t("promptBox.advancedSettings.dataSchemaDescription")}
                       </div>
                     </div>
                     <div className="flex-1">
@@ -527,9 +564,16 @@ function PromptBox() {
                   </div>
                   <div className="flex gap-16">
                     <div className="w-48 shrink-0">
-                      <div className="text-sm">Max Screenshot Scrolls</div>
+                      <div className="text-sm">
+                        {t("promptBox.advancedSettings.maxScreenshotScrolls")}
+                      </div>
                       <div className="text-xs text-slate-400">
-                        {`The maximum number of scrolls for the post action screenshot. Default is ${MAX_SCREENSHOT_SCROLLS_DEFAULT}. If it's set to 0, it will take the current viewport screenshot.`}
+                        {t(
+                          "promptBox.advancedSettings.maxScreenshotScrollsDescription",
+                          {
+                            default: MAX_SCREENSHOT_SCROLLS_DEFAULT,
+                          },
+                        )}
                       </div>
                     </div>
                     <Input
