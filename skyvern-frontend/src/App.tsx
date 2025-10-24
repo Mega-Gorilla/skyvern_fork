@@ -7,6 +7,7 @@ import { queryClient } from "./api/QueryClient";
 import { PostHogProvider } from "posthog-js/react";
 import { LoggingContext, loggingStub } from "@/store/LoggingContext";
 import { UserContext } from "@/store/UserContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const postHogOptions = {
   api_host: "https://app.posthog.com",
@@ -29,9 +30,11 @@ function App() {
           options={postHogOptions}
         >
           <QueryClientProvider client={queryClient}>
-            <ThemeProvider defaultTheme="dark">
-              <RouterProvider router={router} />
-            </ThemeProvider>
+            <LanguageProvider>
+              <ThemeProvider defaultTheme="dark">
+                <RouterProvider router={router} />
+              </ThemeProvider>
+            </LanguageProvider>
           </QueryClientProvider>
         </PostHogProvider>
       </UserContext.Provider>

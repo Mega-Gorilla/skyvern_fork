@@ -1,0 +1,30 @@
+{
+  "language": {
+    "select": "言語を選択",
+    "syncing": "同期中"
+  },
+  "loading": "読み込み中...",
+  "common": {
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "close": "閉じる",
+    "search": "検索",
+    "filter": "フィルター",
+    "refresh": "更新",
+    "menu": "メニュー"
+  },
+  "navigation": {
+    "tasks": "タスク",
+    "workflows": "ワークフロー",
+    "settings": "設定",
+    "documentation": "ドキュメント"
+  },
+  "status": {
+    "loading": "読み込み中",
+    "success": "成功",
+    "error": "エラー",
+    "warning": "警告"
+  }
+}
