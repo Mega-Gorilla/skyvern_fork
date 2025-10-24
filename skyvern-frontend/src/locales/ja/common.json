@@ -1,0 +1,36 @@
+{
+  "language": {
+    "select": "言語を選択",
+    "syncing": "同期中"
+  },
+  "loading": "読み込み中...",
+  "common": {
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "close": "閉じる",
+    "search": "検索",
+    "filter": "フィルター",
+    "refresh": "更新",
+    "menu": "メニュー"
+  },
+  "navigation": {
+    "build": "構築",
+    "discover": "発見",
+    "workflows": "ワークフロー",
+    "history": "履歴",
+    "browsers": "ブラウザ",
+    "general": "一般",
+    "settings": "設定",
+    "credentials": "認証情報",
+    "tasks": "タスク",
+    "documentation": "ドキュメント"
+  },
+  "status": {
+    "loading": "読み込み中",
+    "success": "成功",
+    "error": "エラー",
+    "warning": "警告"
+  }
+}

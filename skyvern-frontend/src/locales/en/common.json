@@ -1,0 +1,36 @@
+{
+  "language": {
+    "select": "Select language",
+    "syncing": "Syncing"
+  },
+  "loading": "Loading...",
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "refresh": "Refresh",
+    "menu": "Menu"
+  },
+  "navigation": {
+    "build": "Build",
+    "discover": "Discover",
+    "workflows": "Workflows",
+    "history": "History",
+    "browsers": "Browsers",
+    "general": "General",
+    "settings": "Settings",
+    "credentials": "Credentials",
+    "tasks": "Tasks",
+    "documentation": "Documentation"
+  },
+  "status": {
+    "loading": "Loading",
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warning"
+  }
+}
