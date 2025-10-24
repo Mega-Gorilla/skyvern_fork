@@ -30,13 +30,13 @@ function FileUpload({ value, onChange }: Props) {
   const credentialGetter = useCredentialGetter();
   const [file, setFile] = useState<File | null>(null);
   const inputId = useId();
-  const { t } = useTranslation("errors");
+  const { t } = useTranslation(["common", "errors"]);
 
   function showFileSizeError() {
     toast({
       variant: "destructive",
-      title: t("fileUpload.sizeLimitTitle"),
-      description: t("fileUpload.sizeLimitDescription"),
+      title: t("errors:fileUpload.sizeLimitTitle"),
+      description: t("errors:fileUpload.sizeLimitDescription"),
     });
   }
 
@@ -67,11 +67,16 @@ function FileUpload({ value, onChange }: Props) {
     },
     onError: (error) => {
       setFile(null);
+      // error.message のフォールバック処理（Nit対応）
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : t("errors:fileUpload.uploadFailedDescription");
       toast({
         variant: "destructive",
-        title: t("fileUpload.uploadFailedTitle"),
-        description: t("fileUpload.uploadFailedDescription", {
-          message: error.message,
+        title: t("errors:fileUpload.uploadFailedTitle"),
+        description: t("errors:fileUpload.uploadFailedDescription", {
+          message: errorMessage,
         }),
       });
     },
@@ -111,8 +116,12 @@ function FileUpload({ value, onChange }: Props) {
       }}
     >
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="upload">Upload</TabsTrigger>
-        <TabsTrigger value="fileURL">File URL</TabsTrigger>
+        <TabsTrigger value="upload">
+          {t("common:fileUpload.tabs.upload")}
+        </TabsTrigger>
+        <TabsTrigger value="fileURL">
+          {t("common:fileUpload.tabs.fileURL")}
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="upload">
         {isManualUpload && ( // redundant check for ts compiler
@@ -166,9 +175,7 @@ function FileUpload({ value, onChange }: Props) {
                 <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
               )}
               <span>
-                {file
-                  ? file.name
-                  : "Drag and drop file here or click to select (Max 10MB)"}
+                {file ? file.name : t("common:fileUpload.dropzone.prompt")}
               </span>
             </div>
           </Label>
@@ -176,7 +183,7 @@ function FileUpload({ value, onChange }: Props) {
       </TabsContent>
       <TabsContent value="fileURL">
         <div className="space-y-2">
-          <Label>File URL</Label>
+          <Label>{t("common:fileUpload.fileUrlLabel")}</Label>
           {typeof value === "string" && (
             <Input
               value={value}
