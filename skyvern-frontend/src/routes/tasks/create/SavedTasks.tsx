@@ -21,38 +21,41 @@ import {
   TaskBlock,
   WorkflowApiResponse,
 } from "@/routes/workflows/types/workflowTypes";
-
-function createEmptyTaskTemplate() {
-  return {
-    title: "New Template",
-    description: "",
-    is_saved_task: true,
-    webhook_callback_url: null,
-    proxy_location: "RESIDENTIAL",
-    workflow_definition: {
-      parameters: [
-        {
-          parameter_type: "workflow",
-          workflow_parameter_type: "json",
-          key: "navigation_payload",
-          default_value: "null",
-        },
-      ],
-      blocks: [
-        {
-          block_type: "task",
-          label: "New Template",
-          url: "https://example.com",
-          navigation_goal: "",
-          data_extraction_goal: null,
-          data_schema: null,
-        },
-      ],
-    },
-  };
-}
+import { useTranslation } from "react-i18next";
 
 function SavedTasks() {
+  const { t } = useTranslation("tasks");
+
+  function createEmptyTaskTemplate() {
+    return {
+      title: t("saved.defaults.newTemplate"),
+      description: "",
+      is_saved_task: true,
+      webhook_callback_url: null,
+      proxy_location: "RESIDENTIAL",
+      workflow_definition: {
+        parameters: [
+          {
+            parameter_type: "workflow",
+            workflow_parameter_type: "json",
+            key: "navigation_payload",
+            default_value: "null",
+          },
+        ],
+        blocks: [
+          {
+            block_type: "task",
+            label: t("saved.defaults.newTemplate"),
+            url: "https://example.com",
+            navigation_goal: "",
+            data_extraction_goal: null,
+            data_schema: null,
+          },
+        ],
+      },
+    };
+  }
+
   const credentialGetter = useCredentialGetter();
   const navigate = useNavigate();
   const [hovering, setHovering] = useState(false);
@@ -89,15 +92,15 @@ function SavedTasks() {
     onError: (error) => {
       toast({
         variant: "destructive",
-        title: "There was an error while saving changes",
+        title: t("saved.toasts.errorTitle"),
         description: error.message,
       });
     },
     onSuccess: (response) => {
       toast({
         variant: "success",
-        title: "New template created",
-        description: "Your template was created successfully",
+        title: t("saved.toasts.successTitle"),
+        description: t("saved.toasts.successDescription"),
       });
       queryClient.invalidateQueries({
         queryKey: ["savedTasks"],
@@ -120,8 +123,8 @@ function SavedTasks() {
             "bg-slate-900": hovering,
           })}
         >
-          <CardTitle className="font-normal">New Task</CardTitle>
-          <CardDescription>{"https://.."}</CardDescription>
+          <CardTitle className="font-normal">{t("saved.newTask")}</CardTitle>
+          <CardDescription>{t("saved.defaultUrl")}</CardDescription>
         </CardHeader>
         <CardContent
           className={cn(
