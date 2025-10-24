@@ -1,0 +1,57 @@
+{
+  "list": {
+    "pageTitle": "Browsers",
+    "pageDescription": "Create your own live browsers to interact with websites, or run workflows in.",
+    "createButton": "Create",
+    "table": {
+      "headers": {
+        "id": "ID",
+        "open": "Open",
+        "occupied": "Occupied",
+        "occupiedHelp": "Browser is busy running a task or workflow",
+        "started": "Started",
+        "timeout": "Timeout",
+        "cdpUrl": "CDP Url"
+      },
+      "badges": {
+        "yes": "Yes",
+        "no": "No"
+      },
+      "loading": "Loading...",
+      "noSessionsFound": "No browser sessions found",
+      "notStarted": "not started",
+      "never": "never"
+    },
+    "pagination": {
+      "itemsPerPage": "Items per page"
+    },
+    "drawer": {
+      "title": "Create Browser Session",
+      "description": "Create a new browser session to interact with websites, or run workflows in.",
+      "proxyLocation": "Proxy Location",
+      "proxyLocationHelp": "Route Skyvern through one of our available proxies.",
+      "timeout": "Timeout (Minutes)",
+      "timeoutHelp": "Duration to keep the browser session open. Automatically extends as it is used.",
+      "timeoutPlaceholder": "timeout (minutes)",
+      "createButton": "Create"
+    }
+  },
+  "detail": {
+    "loading": "Loading...",
+    "notFound": "No browser session found.",
+    "pageTitle": "Browser Session",
+    "tabs": {
+      "stream": "Stream",
+      "streamHelp": "The live stream of the browser session (if active).",
+      "recordings": "Recordings",
+      "recordingsHelp": "All recordings of this browser session."
+    },
+    "stopButton": "Stop",
+    "stopDialog": {
+      "title": "Are you sure?",
+      "description": "Are you sure you want to stop (shut down) this browser session?",
+      "backButton": "Back",
+      "stopButton": "Stop Browser Session"
+    }
+  }
+}

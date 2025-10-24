@@ -2,6 +2,7 @@ import { ReloadIcon, StopIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 import { getClient } from "@/api/AxiosClient";
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,7 @@ import { BrowserSessionVideo } from "./BrowserSessionVideo";
 type TabName = "stream" | "videos";
 
 function BrowserSession() {
+  const { t } = useTranslation("browserSessions");
   const { browserSessionId } = useParams();
   const [hasBrowserSession, setHasBrowserSession] = useState(false);
   const [browserSession, setBrowserSession] =
@@ -71,7 +73,7 @@ function BrowserSession() {
       <div className="h-screen w-full gap-4 p-6">
         <div className="flex h-full w-full items-center justify-center">
           {/* we need nice artwork here */}
-          Loading...
+          {t("detail.loading")}
         </div>
       </div>
     );
@@ -82,7 +84,7 @@ function BrowserSession() {
       <div className="h-screen w-full gap-4 p-6">
         <div className="flex h-full w-full items-center justify-center">
           {/* we need nice artwork here */}
-          No browser session found.
+          {t("detail.notFound")}
         </div>
       </div>
     );
@@ -94,7 +96,7 @@ function BrowserSession() {
         <div className="flex w-full flex-shrink-0 flex-row items-center justify-between rounded-lg border p-4">
           <div className="flex w-full flex-row items-center justify-start gap-2">
             <LogoMinimized />
-            <div className="text-xl">Browser Session</div>
+            <div className="text-xl">{t("detail.pageTitle")}</div>
             {browserSession && (
               <div className="ml-auto flex flex-col items-end justify-end overflow-hidden">
                 <div className="flex items-center justify-end">
@@ -130,14 +132,14 @@ function BrowserSession() {
             value={activeTab}
             options={[
               {
-                label: "Stream",
+                label: t("detail.tabs.stream"),
                 value: "stream",
-                helpText: "The live stream of the browser session (if active).",
+                helpText: t("detail.tabs.streamHelp"),
               },
               {
-                label: "Recordings",
+                label: t("detail.tabs.recordings"),
                 value: "videos",
-                helpText: "All recordings of this browser session.",
+                helpText: t("detail.tabs.recordingsHelp"),
               },
             ]}
           />
@@ -147,20 +149,21 @@ function BrowserSession() {
               <DialogTrigger asChild>
                 <Button className="ml-auto" variant="secondary">
                   <StopIcon className="mr-2 h-4 w-4" />
-                  Stop
+                  {t("detail.stopButton")}
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Are you sure?</DialogTitle>
+                  <DialogTitle>{t("detail.stopDialog.title")}</DialogTitle>
                   <DialogDescription>
-                    Are you sure you want to stop (shut down) this browser
-                    session?
+                    {t("detail.stopDialog.description")}
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
                   <DialogClose asChild>
-                    <Button variant="secondary">Back</Button>
+                    <Button variant="secondary">
+                      {t("detail.stopDialog.backButton")}
+                    </Button>
                   </DialogClose>
                   <Button
                     variant="destructive"
@@ -172,7 +175,7 @@ function BrowserSession() {
                     {closeBrowserSessionMutation.isPending && (
                       <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
                     )}
-                    Stop Browser Session
+                    {t("detail.stopDialog.stopButton")}
                   </Button>
                 </DialogFooter>
               </DialogContent>
