@@ -39,6 +39,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDebounce } from "use-debounce";
+import { useTranslation } from "react-i18next";
 import { NarrativeCard } from "./components/header/NarrativeCard";
 import { WorkflowParametersDialog } from "./components/WorkflowParametersDialog";
 import { useCreateWorkflowMutation } from "./hooks/useCreateWorkflowMutation";
@@ -48,21 +49,22 @@ import { WorkflowCreateYAMLRequest } from "./types/workflowYamlTypes";
 import { WorkflowActions } from "./WorkflowActions";
 import { WorkflowTemplates } from "../discover/WorkflowTemplates";
 
-const emptyWorkflowRequest: WorkflowCreateYAMLRequest = {
-  title: "New Workflow",
-  description: "",
-  ai_fallback: true,
-  run_with: "agent",
-  workflow_definition: {
-    blocks: [],
-    parameters: [],
-  },
-};
-
 function Workflows() {
+  const { t } = useTranslation("workflows");
   const credentialGetter = useCredentialGetter();
   const navigate = useNavigate();
   const createWorkflowMutation = useCreateWorkflowMutation();
+
+  const emptyWorkflowRequest: WorkflowCreateYAMLRequest = {
+    title: t("defaults.newWorkflow"),
+    description: "",
+    ai_fallback: true,
+    run_with: "agent",
+    workflow_definition: {
+      blocks: [],
+      parameters: [],
+    },
+  };
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
   const [openWorkflowId, setOpenWorkflowId] = useState<string | null>(null);
@@ -168,31 +170,28 @@ function Workflows() {
         <div className="space-y-5">
           <div className="flex items-center gap-2">
             <LightningBoltIcon className="size-6" />
-            <h1 className="text-2xl">Workflows</h1>
+            <h1 className="text-2xl">{t("pageTitle")}</h1>
           </div>
-          <p className="text-slate-300">
-            Create your own complex workflows by connecting web agents together.
-            Define a series of actions, set it, and forget it.
-          </p>
+          <p className="text-slate-300">{t("pageDescription")}</p>
         </div>
         <div className="flex gap-5">
           <NarrativeCard
             index={1}
-            description="Save browser sessions and reuse them in subsequent runs"
+            description={t("narrativeCards.browserSessions")}
           />
           <NarrativeCard
             index={2}
-            description="Connect multiple agents together to carry out complex objectives"
+            description={t("narrativeCards.multipleAgents")}
           />
           <NarrativeCard
             index={3}
-            description="Execute non-browser tasks such as sending emails"
+            description={t("narrativeCards.nonBrowserTasks")}
           />
         </div>
       </div>
       <div className="space-y-4">
         <header>
-          <h1 className="text-xl">My Flows</h1>
+          <h1 className="text-xl">{t("myFlows.title")}</h1>
         </header>
         <div className="flex justify-between">
           <div className="relative">
@@ -205,7 +204,7 @@ function Workflows() {
                 setSearch(event.target.value);
                 setParamPatch({ page: "1" });
               }}
-              placeholder="Search by title or parameter..."
+              placeholder={t("myFlows.searchPlaceholder")}
               className="w-48 pl-9 lg:w-72"
             />
           </div>
@@ -222,7 +221,7 @@ function Workflows() {
               ) : (
                 <PlusIcon className="mr-2 h-4 w-4" />
               )}
-              Create
+              {t("myFlows.createButton")}
             </Button>
           </div>
         </div>
@@ -231,11 +230,13 @@ function Workflows() {
             <TableHeader className="rounded-t-lg bg-slate-elevation2">
               <TableRow>
                 <TableHead className="w-1/3 rounded-tl-lg text-slate-400">
-                  ID
+                  {t("table.headers.id")}
                 </TableHead>
-                <TableHead className="w-1/3 text-slate-400">Title</TableHead>
                 <TableHead className="w-1/3 text-slate-400">
-                  Created At
+                  {t("table.headers.title")}
+                </TableHead>
+                <TableHead className="w-1/3 text-slate-400">
+                  {t("table.headers.createdAt")}
                 </TableHead>
                 <TableHead className="rounded-tr-lg"></TableHead>
               </TableRow>
@@ -243,11 +244,13 @@ function Workflows() {
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={4}>Loading...</TableCell>
+                  <TableCell colSpan={4}>{t("myFlows.loading")}</TableCell>
                 </TableRow>
               ) : workflows?.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={4}>No workflows found</TableCell>
+                  <TableCell colSpan={4}>
+                    {t("myFlows.noWorkflowsFound")}
+                  </TableCell>
                 </TableRow>
               ) : (
                 workflows?.map((workflow) => {
@@ -296,7 +299,9 @@ function Workflows() {
                                   <Pencil2Icon className="h-4 w-4" />
                                 </Button>
                               </TooltipTrigger>
-                              <TooltipContent>Open in Editor</TooltipContent>
+                              <TooltipContent>
+                                {t("table.tooltips.openInEditor")}
+                              </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
                           <TooltipProvider>
@@ -315,7 +320,9 @@ function Workflows() {
                                   <PlayIcon className="h-4 w-4" />
                                 </Button>
                               </TooltipTrigger>
-                              <TooltipContent>Create New Run</TooltipContent>
+                              <TooltipContent>
+                                {t("table.tooltips.createNewRun")}
+                              </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
                           <WorkflowActions workflow={workflow} />
@@ -339,7 +346,9 @@ function Workflows() {
                                   <MixerHorizontalIcon className="h-4 w-4" />
                                 </Button>
                               </TooltipTrigger>
-                              <TooltipContent>View Parameters</TooltipContent>
+                              <TooltipContent>
+                                {t("table.tooltips.viewParameters")}
+                              </TooltipContent>
                             </Tooltip>
                           </TooltipProvider>
                         </div>
@@ -360,7 +369,9 @@ function Workflows() {
           />
           <div className="relative px-3 py-3">
             <div className="absolute left-3 top-1/2 flex -translate-y-1/2 items-center gap-2 text-sm">
-              <span className="text-slate-400">Items per page</span>
+              <span className="text-slate-400">
+                {t("pagination.itemsPerPage")}
+              </span>
               <select
                 className="h-9 rounded-md border border-slate-300 bg-background px-3"
                 value={itemsPerPage}
