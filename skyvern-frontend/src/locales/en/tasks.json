@@ -1,0 +1,32 @@
+{
+  "tabs": {
+    "runHistory": "Run History",
+    "myTasks": "My Tasks"
+  },
+  "history": {
+    "pageTitle": "Task Runs",
+    "exportButton": "Export CSV",
+    "error": "Error: {{message}}",
+    "noTasksFound": "No tasks found"
+  },
+  "table": {
+    "headers": {
+      "id": "ID",
+      "url": "URL",
+      "status": "Status",
+      "createdAt": "Created At"
+    }
+  },
+  "saved": {
+    "newTask": "New Task",
+    "defaultUrl": "https://..",
+    "defaults": {
+      "newTemplate": "New Template"
+    },
+    "toasts": {
+      "errorTitle": "There was an error while saving changes",
+      "successTitle": "New template created",
+      "successDescription": "Your template was created successfully"
+    }
+  }
+}

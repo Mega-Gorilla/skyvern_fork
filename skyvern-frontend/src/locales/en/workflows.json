@@ -1,0 +1,34 @@
+{
+  "pageTitle": "Workflows",
+  "pageDescription": "Create your own complex workflows by connecting web agents together. Define a series of actions, set it, and forget it.",
+  "narrativeCards": {
+    "browserSessions": "Save browser sessions and reuse them in subsequent runs",
+    "multipleAgents": "Connect multiple agents together to carry out complex objectives",
+    "nonBrowserTasks": "Execute non-browser tasks such as sending emails"
+  },
+  "myFlows": {
+    "title": "My Flows",
+    "searchPlaceholder": "Search by title or parameter...",
+    "createButton": "Create",
+    "loading": "Loading...",
+    "noWorkflowsFound": "No workflows found"
+  },
+  "table": {
+    "headers": {
+      "id": "ID",
+      "title": "Title",
+      "createdAt": "Created At"
+    },
+    "tooltips": {
+      "openInEditor": "Open in Editor",
+      "createNewRun": "Create New Run",
+      "viewParameters": "View Parameters"
+    }
+  },
+  "pagination": {
+    "itemsPerPage": "Items per page"
+  },
+  "defaults": {
+    "newWorkflow": "New Workflow"
+  }
+}

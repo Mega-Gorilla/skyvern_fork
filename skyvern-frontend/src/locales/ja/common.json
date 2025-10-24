@@ -32,5 +32,16 @@
     "success": "成功",
     "error": "エラー",
     "warning": "警告"
+  },
+  "fileUpload": {
+    "tabs": {
+      "upload": "アップロード",
+      "fileURL": "ファイルURL"
+    },
+    "dropzone": {
+      "prompt": "ファイルをここにドラッグ＆ドロップするか、クリックして選択してください（最大10MB）"
+    },
+    "fileUrlLabel": "ファイルURL",
+    "removeFile": "ファイルを削除"
   }
 }

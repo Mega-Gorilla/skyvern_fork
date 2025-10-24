@@ -1,6 +1,7 @@
 import { GlobeIcon, PlusIcon, ReloadIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { ProxyLocation } from "@/api/types";
 import { Badge } from "@/components/ui/badge";
@@ -45,21 +46,22 @@ function sessionIsOpen(browserSession: BrowserSession): boolean {
   );
 }
 
-const No = () => (
-  <Badge className="flex h-7 w-12 justify-center bg-gray-800 text-orange-50 hover:bg-gray-900">
-    No
-  </Badge>
-);
-
-const Yes = () => (
-  <Badge className="flex h-7 w-12 justify-center bg-green-900 text-green-50 hover:bg-green-900/80">
-    Yes
-  </Badge>
-);
-
 function BrowserSessions() {
+  const { t } = useTranslation("browserSessions");
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const No = () => (
+    <Badge className="flex h-7 w-12 justify-center bg-gray-800 text-orange-50 hover:bg-gray-900">
+      {t("list.table.badges.no")}
+    </Badge>
+  );
+
+  const Yes = () => (
+    <Badge className="flex h-7 w-12 justify-center bg-green-900 text-green-50 hover:bg-green-900/80">
+      {t("list.table.badges.yes")}
+    </Badge>
+  );
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [sessionOptions, setSessionOptions] = useState<{
     proxyLocation: ProxyLocation;
@@ -128,12 +130,9 @@ function BrowserSessions() {
       <div className="space-y-5">
         <div className="flex items-center gap-2">
           <GlobeIcon className="size-6" />
-          <h1 className="text-2xl">Browsers</h1>
+          <h1 className="text-2xl">{t("list.pageTitle")}</h1>
         </div>
-        <p className="text-slate-300">
-          Create your own live browsers to interact with websites, or run
-          workflows in.
-        </p>
+        <p className="text-slate-300">{t("list.pageDescription")}</p>
       </div>
 
       {/* browsers */}
@@ -151,7 +150,7 @@ function BrowserSessions() {
               ) : (
                 <PlusIcon className="mr-2 h-4 w-4" />
               )}
-              Create
+              {t("list.createButton")}
             </Button>
           </div>
         </div>
@@ -160,37 +159,41 @@ function BrowserSessions() {
             <TableHeader className="rounded-t-lg bg-slate-elevation2">
               <TableRow>
                 <TableHead className="w-1/4 truncate rounded-tl-lg text-slate-400">
-                  ID
+                  {t("list.table.headers.id")}
                 </TableHead>
                 <TableHead className="w-1/12 truncate text-slate-400">
-                  Open
+                  {t("list.table.headers.open")}
                 </TableHead>
                 <TableHead className="w-1/6 truncate text-slate-400">
-                  <span className="mr-2">Occupied</span>
+                  <span className="mr-2">
+                    {t("list.table.headers.occupied")}
+                  </span>
                   <HelpTooltip
                     className="inline"
-                    content="Browser is busy running a task or workflow"
+                    content={t("list.table.headers.occupiedHelp")}
                   />
                 </TableHead>
                 <TableHead className="w-1/6 truncate text-slate-400">
-                  Started
+                  {t("list.table.headers.started")}
                 </TableHead>
                 <TableHead className="w-1/6 truncate text-slate-400">
-                  Timeout
+                  {t("list.table.headers.timeout")}
                 </TableHead>
                 <TableHead className="w-1/2 truncate text-slate-400">
-                  CDP Url
+                  {t("list.table.headers.cdpUrl")}
                 </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={6}>Loading...</TableCell>
+                  <TableCell colSpan={6}>{t("list.table.loading")}</TableCell>
                 </TableRow>
               ) : browserSessions?.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6}>No browser sessions found</TableCell>
+                  <TableCell colSpan={6}>
+                    {t("list.table.noSessionsFound")}
+                  </TableCell>
                 </TableRow>
               ) : (
                 browserSessions?.map((browserSession) => {
@@ -202,7 +205,7 @@ function BrowserSessions() {
                   const ago = startedAtDate ? (
                     formatMs(Date.now() - startedAtDate.getTime()).ago
                   ) : (
-                    <span className="opacity-50">never</span>
+                    <span className="opacity-50">{t("list.table.never")}</span>
                   );
                   const cdpUrl = browserSession.browser_address ?? "-";
 
@@ -233,7 +236,7 @@ function BrowserSessions() {
                         title={
                           browserSession.started_at
                             ? basicTimeFormat(browserSession.started_at)
-                            : "not started"
+                            : t("list.table.notStarted")
                         }
                       >
                         {ago}
@@ -262,7 +265,9 @@ function BrowserSessions() {
           </Table>
           <div className="relative px-3 py-3">
             <div className="absolute left-3 top-1/2 flex -translate-y-1/2 items-center gap-2 text-sm">
-              <span className="text-slate-400">Items per page</span>
+              <span className="text-slate-400">
+                {t("list.pagination.itemsPerPage")}
+              </span>
               <select
                 className="h-9 rounded-md border border-slate-300 bg-background"
                 value={itemsPerPage}
@@ -323,15 +328,14 @@ function BrowserSessions() {
       >
         <DrawerContent className="bottom-2 right-0 top-2 mt-0 h-full w-96 rounded border-0 p-6">
           <DrawerHeader>
-            <DrawerTitle>Create Browser Session</DrawerTitle>
+            <DrawerTitle>{t("list.drawer.title")}</DrawerTitle>
             <DrawerDescription>
-              Create a new browser session to interact with websites, or run
-              workflows in.
+              {t("list.drawer.description")}
               <div className="mt-8 flex flex-col gap-4">
                 <div className="space-y-2">
                   <div className="flex gap-2">
-                    <Label>Proxy Location</Label>
-                    <HelpTooltip content="Route Skyvern through one of our available proxies." />
+                    <Label>{t("list.drawer.proxyLocation")}</Label>
+                    <HelpTooltip content={t("list.drawer.proxyLocationHelp")} />
                   </div>
                   <ProxySelector
                     value={sessionOptions.proxyLocation}
@@ -345,12 +349,12 @@ function BrowserSessions() {
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
-                    <Label>Timeout (Minutes)</Label>
-                    <HelpTooltip content="Duration to keep the browser session open. Automatically extends as it is used." />
+                    <Label>{t("list.drawer.timeout")}</Label>
+                    <HelpTooltip content={t("list.drawer.timeoutHelp")} />
                   </div>
                   <Input
                     value={sessionOptions.timeoutMinutes}
-                    placeholder="timeout (minutes)"
+                    placeholder={t("list.drawer.timeoutPlaceholder")}
                     onChange={(event) => {
                       const value =
                         event.target.value === ""
@@ -381,7 +385,7 @@ function BrowserSessions() {
                   ) : (
                     <PlusIcon className="mr-2 h-4 w-4" />
                   )}
-                  Create
+                  {t("list.drawer.createButton")}
                 </Button>
               </div>
             </DrawerDescription>

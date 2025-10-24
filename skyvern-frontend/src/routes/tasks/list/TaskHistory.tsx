@@ -29,8 +29,10 @@ import { TaskListSkeletonRows } from "./TaskListSkeletonRows";
 import { Button } from "@/components/ui/button";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import { downloadBlob } from "@/util/downloadBlob";
+import { useTranslation } from "react-i18next";
 
 function TaskHistory() {
+  const { t } = useTranslation("tasks");
   const credentialGetter = useCredentialGetter();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
@@ -63,7 +65,7 @@ function TaskHistory() {
   });
 
   if (isError) {
-    return <div>Error: {error?.message}</div>;
+    return <div>{t("history.error", { message: error?.message })}</div>;
   }
 
   function handleNavigate(event: React.MouseEvent, id: string) {
@@ -107,7 +109,7 @@ function TaskHistory() {
   return (
     <div className="space-y-4">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl">Task Runs</h1>
+        <h1 className="text-2xl">{t("history.pageTitle")}</h1>
         <div className="flex gap-2">
           <StatusFilterDropdown
             values={statusFilters}
@@ -115,7 +117,7 @@ function TaskHistory() {
           />
           <Button variant="secondary" onClick={handleExport}>
             <DownloadIcon className="mr-2" />
-            Export CSV
+            {t("history.exportButton")}
           </Button>
         </div>
       </header>
@@ -123,10 +125,14 @@ function TaskHistory() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-1/4">ID</TableHead>
-              <TableHead className="w-1/4">URL</TableHead>
-              <TableHead className="w-1/6">Status</TableHead>
-              <TableHead className="w-1/4">Created At</TableHead>
+              <TableHead className="w-1/4">{t("table.headers.id")}</TableHead>
+              <TableHead className="w-1/4">{t("table.headers.url")}</TableHead>
+              <TableHead className="w-1/6">
+                {t("table.headers.status")}
+              </TableHead>
+              <TableHead className="w-1/4">
+                {t("table.headers.createdAt")}
+              </TableHead>
               <TableHead className="w-1/12" />
             </TableRow>
           </TableHeader>
@@ -135,7 +141,7 @@ function TaskHistory() {
               <TaskListSkeletonRows />
             ) : tasks?.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5}>No tasks found</TableCell>
+                <TableCell colSpan={5}>{t("history.noTasksFound")}</TableCell>
               </TableRow>
             ) : (
               tasks?.map((task) => {

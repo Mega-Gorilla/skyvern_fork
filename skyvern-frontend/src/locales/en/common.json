@@ -32,5 +32,16 @@
     "success": "Success",
     "error": "Error",
     "warning": "Warning"
+  },
+  "fileUpload": {
+    "tabs": {
+      "upload": "Upload",
+      "fileURL": "File URL"
+    },
+    "dropzone": {
+      "prompt": "Drag and drop file here or click to select (Max 10MB)"
+    },
+    "fileUrlLabel": "File URL",
+    "removeFile": "Remove file"
   }
 }

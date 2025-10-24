@@ -1,0 +1,57 @@
+{
+  "list": {
+    "pageTitle": "ブラウザー",
+    "pageDescription": "Webサイトと対話したり、ワークフローを実行するための独自のライブブラウザーを作成します。",
+    "createButton": "作成",
+    "table": {
+      "headers": {
+        "id": "ID",
+        "open": "オープン",
+        "occupied": "使用中",
+        "occupiedHelp": "ブラウザーがタスクまたはワークフローを実行中です",
+        "started": "開始時刻",
+        "timeout": "タイムアウト",
+        "cdpUrl": "CDP URL"
+      },
+      "badges": {
+        "yes": "はい",
+        "no": "いいえ"
+      },
+      "loading": "読み込み中...",
+      "noSessionsFound": "ブラウザーセッションが見つかりません",
+      "notStarted": "未開始",
+      "never": "なし"
+    },
+    "pagination": {
+      "itemsPerPage": "ページあたりの項目数"
+    },
+    "drawer": {
+      "title": "ブラウザーセッションを作成",
+      "description": "Webサイトと対話したり、ワークフローを実行するための新しいブラウザーセッションを作成します。",
+      "proxyLocation": "プロキシロケーション",
+      "proxyLocationHelp": "利用可能なプロキシのいずれかを経由してSkyvernをルーティングします。",
+      "timeout": "タイムアウト（分）",
+      "timeoutHelp": "ブラウザーセッションを開いたままにする期間。使用中は自動的に延長されます。",
+      "timeoutPlaceholder": "タイムアウト（分）",
+      "createButton": "作成"
+    }
+  },
+  "detail": {
+    "loading": "読み込み中...",
+    "notFound": "ブラウザーセッションが見つかりません。",
+    "pageTitle": "ブラウザーセッション",
+    "tabs": {
+      "stream": "ストリーム",
+      "streamHelp": "ブラウザーセッションのライブストリーム（アクティブな場合）。",
+      "recordings": "録画",
+      "recordingsHelp": "このブラウザーセッションのすべての録画。"
+    },
+    "stopButton": "停止",
+    "stopDialog": {
+      "title": "本当によろしいですか？",
+      "description": "このブラウザーセッションを停止（シャットダウン）してもよろしいですか？",
+      "backButton": "戻る",
+      "stopButton": "ブラウザーセッションを停止"
+    }
+  }
+}

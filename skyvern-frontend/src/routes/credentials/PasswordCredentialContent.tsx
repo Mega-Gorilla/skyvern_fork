@@ -17,6 +17,7 @@ import {
 } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation, Trans } from "react-i18next";
 
 type Props = {
   values: {
@@ -39,6 +40,7 @@ function PasswordCredentialContent({
   values: { name, username, password, totp, totp_type },
   onChange,
 }: Props) {
+  const { t } = useTranslation("credentials");
   const [totpMethod, setTotpMethod] = useState<
     "authenticator" | "email" | "text"
   >("authenticator");
@@ -62,9 +64,9 @@ function PasswordCredentialContent({
     <div className="space-y-5">
       <div className="flex">
         <div className="w-72 shrink-0 space-y-1">
-          <Label>Name</Label>
+          <Label>{t("password.name")}</Label>
           <div className="text-sm text-slate-400">
-            The name of the credential
+            {t("password.nameDescription")}
           </div>
         </div>
         <Input
@@ -83,7 +85,7 @@ function PasswordCredentialContent({
       <Separator />
       <div className="flex items-center gap-12">
         <div className="w-40 shrink-0">
-          <Label>Username or email</Label>
+          <Label>{t("password.usernameOrEmail")}</Label>
         </div>
         <Input
           value={username}
@@ -100,7 +102,7 @@ function PasswordCredentialContent({
       </div>
       <div className="flex items-center gap-12">
         <div className="w-40 shrink-0">
-          <Label>Password</Label>
+          <Label>{t("password.password")}</Label>
         </div>
         <div className="relative w-full">
           <Input
@@ -122,7 +124,7 @@ function PasswordCredentialContent({
             onClick={() => {
               setShowPassword((value) => !value);
             }}
-            aria-label="Toggle password visibility"
+            aria-label={t("password.togglePasswordVisibility")}
           >
             {showPassword ? (
               <EyeOpenIcon className="size-4" />
@@ -136,13 +138,12 @@ function PasswordCredentialContent({
       <Accordion type="single" collapsible>
         <AccordionItem value="two-factor-authentication" className="border-b-0">
           <AccordionTrigger className="py-2">
-            Two-Factor Authentication
+            {t("password.twoFactor.title")}
           </AccordionTrigger>
           <AccordionContent>
             <div className="space-y-4">
               <p className="text-sm text-slate-400">
-                Set up Skyvern to automatically retrieve two-factor
-                authentication codes.
+                {t("password.twoFactor.description")}
               </p>
               <div className="grid h-36 grid-cols-3 gap-4">
                 <div
@@ -155,7 +156,7 @@ function PasswordCredentialContent({
                   onClick={() => handleTotpMethodChange("authenticator")}
                 >
                   <QRCodeIcon className="h-6 w-6" />
-                  <Label>Authenticator App</Label>
+                  <Label>{t("password.twoFactor.authenticatorApp")}</Label>
                 </div>
                 <div
                   className={cn(
@@ -167,7 +168,7 @@ function PasswordCredentialContent({
                   onClick={() => handleTotpMethodChange("email")}
                 >
                   <EnvelopeClosedIcon className="h-6 w-6" />
-                  <Label>Email</Label>
+                  <Label>{t("password.twoFactor.email")}</Label>
                 </div>
                 <div
                   className={cn(
@@ -179,7 +180,7 @@ function PasswordCredentialContent({
                   onClick={() => handleTotpMethodChange("text")}
                 >
                   <MobileIcon className="h-6 w-6" />
-                  <Label>Text Message</Label>
+                  <Label>{t("password.twoFactor.textMessage")}</Label>
                 </div>
               </div>
               {(totpMethod === "text" || totpMethod === "email") && (
@@ -190,19 +191,18 @@ function PasswordCredentialContent({
                     rel="noopener noreferrer"
                     className="underline underline-offset-2"
                   >
-                    Contact us to set up two-factor authentication in workflows
+                    {t("password.twoFactor.contactUs")}
                   </Link>{" "}
-                  or{" "}
+                  {t("password.twoFactor.or")}{" "}
                   <Link
                     to="https://www.skyvern.com/docs/running-tasks/advanced-features#time-based-one-time-password-totp"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline underline-offset-2"
                   >
-                    see our documentation on how to set up two-factor
-                    authentication in workflows
+                    {t("password.twoFactor.seeDocumentation")}
                   </Link>{" "}
-                  to get started.
+                  {t("password.twoFactor.toGetStarted")}
                 </p>
               )}
               {totpMethod === "authenticator" && (
@@ -210,7 +210,7 @@ function PasswordCredentialContent({
                   <div className="flex items-center gap-12">
                     <div className="w-40 shrink-0">
                       <Label className="whitespace-nowrap">
-                        Authenticator Key
+                        {t("password.twoFactor.authenticatorKey")}
                       </Label>
                     </div>
                     <Input
@@ -227,36 +227,37 @@ function PasswordCredentialContent({
                     />
                   </div>
                   <p className="text-sm text-slate-400">
-                    You need to find the authenticator secret from the website
-                    where you are using the credential. Here are some guides
-                    from popular authenticator apps:{"  "}
-                    <Link
-                      to="https://bitwarden.com/help/integrated-authenticator/#manually-enter-a-secret"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      Bitwarden
-                    </Link>
-                    {", "}
-                    <Link
-                      to="https://support.1password.com/one-time-passwords#on-1passwordcom"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      1Password
-                    </Link>
-                    {", and "}
-                    <Link
-                      to="https://support.lastpass.com/s/document-item?language=en_US&bundleId=lastpass&topicId=LastPass/create-totp-vault.html&_LANG=enus"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline underline-offset-2"
-                    >
-                      LastPass
-                    </Link>
-                    {"."}
+                    {t("password.twoFactor.authenticatorHelp")}{" "}
+                    <Trans
+                      i18nKey="password.twoFactor.authenticatorApps"
+                      ns="credentials"
+                      components={{
+                        bitwarden: (
+                          <Link
+                            to="https://bitwarden.com/help/integrated-authenticator/#manually-enter-a-secret"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-2"
+                          />
+                        ),
+                        onepassword: (
+                          <Link
+                            to="https://support.1password.com/one-time-passwords#on-1passwordcom"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-2"
+                          />
+                        ),
+                        lastpass: (
+                          <Link
+                            to="https://support.lastpass.com/s/document-item?language=en_US&bundleId=lastpass&topicId=LastPass/create-totp-vault.html&_LANG=enus"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline underline-offset-2"
+                          />
+                        ),
+                      }}
+                    />
                   </p>
                 </div>
               )}

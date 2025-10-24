@@ -4,6 +4,7 @@ import { cn } from "@/util/utils";
 import { Cross2Icon, FileIcon, ReloadIcon } from "@radix-ui/react-icons";
 import { useMutation } from "@tanstack/react-query";
 import { useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -25,19 +26,19 @@ type Props = {
 
 const FILE_SIZE_LIMIT_IN_BYTES = 10 * 1024 * 1024; // 10 MB
 
-function showFileSizeError() {
-  toast({
-    variant: "destructive",
-    title: "File size limit exceeded",
-    description:
-      "The file you are trying to upload exceeds the 10MB limit, please try again with a different file",
-  });
-}
-
 function FileUpload({ value, onChange }: Props) {
   const credentialGetter = useCredentialGetter();
   const [file, setFile] = useState<File | null>(null);
   const inputId = useId();
+  const { t } = useTranslation(["common", "errors"]);
+
+  function showFileSizeError() {
+    toast({
+      variant: "destructive",
+      title: t("errors:fileUpload.sizeLimitTitle"),
+      description: t("errors:fileUpload.sizeLimitDescription"),
+    });
+  }
 
   const uploadFileMutation = useMutation({
     mutationFn: async (file: File) => {
@@ -66,11 +67,24 @@ function FileUpload({ value, onChange }: Props) {
     },
     onError: (error) => {
       setFile(null);
-      toast({
-        variant: "destructive",
-        title: "Failed to upload file",
-        description: `An error occurred while uploading the file: ${error.message}`,
-      });
+      // error.message のフォールバック処理
+      // Error以外が投げられた場合は専用のフォールバックメッセージを使用
+      if (error instanceof Error) {
+        toast({
+          variant: "destructive",
+          title: t("errors:fileUpload.uploadFailedTitle"),
+          description: t("errors:fileUpload.uploadFailedDescription", {
+            message: error.message,
+          }),
+        });
+      } else {
+        // Error以外（throw "timeout" など）の場合
+        toast({
+          variant: "destructive",
+          title: t("errors:fileUpload.uploadFailedTitle"),
+          description: t("errors:fileUpload.uploadFailedUnknown"),
+        });
+      }
     },
   });
 
@@ -108,8 +122,12 @@ function FileUpload({ value, onChange }: Props) {
       }}
     >
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="upload">Upload</TabsTrigger>
-        <TabsTrigger value="fileURL">File URL</TabsTrigger>
+        <TabsTrigger value="upload">
+          {t("common:fileUpload.tabs.upload")}
+        </TabsTrigger>
+        <TabsTrigger value="fileURL">
+          {t("common:fileUpload.tabs.fileURL")}
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="upload">
         {isManualUpload && ( // redundant check for ts compiler
@@ -120,7 +138,12 @@ function FileUpload({ value, onChange }: Props) {
                 <span>{file.name}</span>
               </div>
             </a>
-            <Button onClick={() => reset()} size="icon" variant="secondary">
+            <Button
+              onClick={() => reset()}
+              size="icon"
+              variant="secondary"
+              aria-label={t("common:fileUpload.removeFile")}
+            >
               <Cross2Icon />
             </Button>
           </div>
@@ -163,9 +186,7 @@ function FileUpload({ value, onChange }: Props) {
                 <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
               )}
               <span>
-                {file
-                  ? file.name
-                  : "Drag and drop file here or click to select (Max 10MB)"}
+                {file ? file.name : t("common:fileUpload.dropzone.prompt")}
               </span>
             </div>
           </Label>
@@ -173,7 +194,7 @@ function FileUpload({ value, onChange }: Props) {
       </TabsContent>
       <TabsContent value="fileURL">
         <div className="space-y-2">
-          <Label>File URL</Label>
+          <Label>{t("common:fileUpload.fileUrlLabel")}</Label>
           {typeof value === "string" && (
             <Input
               value={value}

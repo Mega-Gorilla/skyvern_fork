@@ -3,8 +3,10 @@ import { PromptBox } from "../create/PromptBox";
 import { useState } from "react";
 import { cn } from "@/util/utils";
 import { SavedTasks } from "../create/SavedTasks";
+import { useTranslation } from "react-i18next";
 
 function TasksPage() {
+  const { t } = useTranslation("tasks");
   const [view, setView] = useState<"history" | "myTasks">("history");
 
   return (
@@ -20,7 +22,7 @@ function TasksPage() {
           )}
           onClick={() => setView("history")}
         >
-          Run History
+          {t("tabs.runHistory")}
         </div>
         <div
           className={cn(
@@ -31,7 +33,7 @@ function TasksPage() {
           )}
           onClick={() => setView("myTasks")}
         >
-          My Tasks
+          {t("tabs.myTasks")}
         </div>
       </div>
       {view === "history" && <TaskHistory />}

@@ -13,21 +13,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { KeyIcon } from "@/components/icons/KeyIcon";
-
-const subHeaderText =
-  "Securely store your passwords or credit cards here to link them throughout your workflows.";
+import { useTranslation } from "react-i18next";
 
 function CredentialsPage() {
+  const { t } = useTranslation("credentials");
   const { setIsOpen, setType } = useCredentialModalState();
   return (
     <div className="space-y-5">
-      <h1 className="text-2xl">Credentials</h1>
+      <h1 className="text-2xl">{t("page.title")}</h1>
       <div className="flex items-center justify-between">
-        <div className="w-96 text-sm text-slate-300">{subHeaderText}</div>
+        <div className="w-96 text-sm text-slate-300">
+          {t("page.description")}
+        </div>
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button>
-              <PlusIcon className="mr-2 size-6" /> Add
+              <PlusIcon className="mr-2 size-6" /> {t("page.addButton")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48">
@@ -39,7 +40,7 @@ function CredentialsPage() {
               className="cursor-pointer"
             >
               <KeyIcon className="mr-2 size-4" />
-              Password
+              {t("page.typePassword")}
             </DropdownMenuItem>
             <DropdownMenuItem
               onSelect={() => {
@@ -49,7 +50,7 @@ function CredentialsPage() {
               className="cursor-pointer"
             >
               <CardStackIcon className="mr-2 size-4" />
-              Credit Card
+              {t("page.typeCreditCard")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -60,37 +61,34 @@ function CredentialsPage() {
       {/* Footer note */}
       <div className="mt-8 border-t border-slate-700 pt-4">
         <div className="text-sm italic text-slate-400">
-          <strong>Note:</strong> This feature requires a Bitwarden-compatible
-          server ({" "}
+          <strong>{t("page.note.prefix")}</strong> {t("page.note.text")}
           <a
             href="https://bitwarden.com/help/self-host-an-organization/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-400 underline hover:text-blue-300"
           >
-            self-hosted Bitwarden
-          </a>{" "}
-          ) or{" "}
+            {t("page.note.selfHosted")}
+          </a>
+          {t("page.note.or")}{" "}
           <a
             href="https://github.com/dani-garcia/vaultwarden"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-400 underline hover:text-blue-300"
           >
-            this community version
+            {t("page.note.community")}
           </a>{" "}
-          or a paid Bitwarden account. Make sure the relevant
-          `SKYVERN_AUTH_BITWARDEN_*` environment variables are configured. See
-          details{" "}
+          {t("page.note.suffix")}{" "}
           <a
             href="https://docs.skyvern.com/credentials/bitwarden"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-400 underline hover:text-blue-300"
           >
-            here
+            {t("page.note.here")}
           </a>
-          .
+          {t("page.note.period")}
         </div>
       </div>
     </div>

@@ -1,0 +1,72 @@
+{
+  "pageTitle": "Settings",
+  "pageDescription": "You can select environment and organization here",
+  "environment": {
+    "label": "Environment",
+    "placeholder": "Environment"
+  },
+  "organization": {
+    "label": "Organization",
+    "placeholder": "Organization"
+  },
+  "apiKey": {
+    "title": "API Key",
+    "description": "Currently active API key",
+    "notFound": "API key not found"
+  },
+  "onePassword": {
+    "cardTitle": "1Password Integration",
+    "cardDescription": "Manage your 1Password service account token.",
+    "learnMore": "Learn how to create a service account and get your token.",
+    "title": "1Password Service Account Token",
+    "description": "Configure your 1Password service account token for credential management.",
+    "status": "Status:",
+    "active": "Active",
+    "inactive": "Inactive",
+    "formLabel": "Service Account Token",
+    "placeholder": "op_1234567890abcdef",
+    "required": "1Password token is required",
+    "updateButton": "Update Token",
+    "updating": "Updating...",
+    "lastUpdated": "Last updated:",
+    "tokenInfo": {
+      "title": "Token Information",
+      "id": "ID:",
+      "type": "Type:",
+      "created": "Created:"
+    }
+  },
+  "azure": {
+    "cardTitle": "Azure Integration",
+    "cardDescription": "Manage your Azure integration",
+    "title": "Azure Client Secret Credential",
+    "description": "Configure your Azure Client Secret Credential to give access to your Azure account.",
+    "status": "Status:",
+    "active": "Active",
+    "inactive": "Inactive",
+    "tenantId": {
+      "label": "Tenant ID",
+      "placeholder": "tenant_id",
+      "required": "tenant_id is required"
+    },
+    "clientId": {
+      "label": "Client ID",
+      "placeholder": "client_id",
+      "required": "client_id is required"
+    },
+    "clientSecret": {
+      "label": "Client Secret",
+      "placeholder": "client_secret",
+      "required": "client_secret is required"
+    },
+    "updateButton": "Update Credential",
+    "updating": "Updating...",
+    "lastUpdated": "Last updated:",
+    "credentialInfo": {
+      "title": "Credential Information",
+      "id": "ID:",
+      "type": "Type:",
+      "created": "Created:"
+    }
+  }
+}
