@@ -8,6 +8,22 @@ import {
 } from "./ui/select";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "react-i18next";
+import { SUPPORTED_LANGUAGES, type SupportedLanguage } from "@/i18n/constants";
+
+/**
+ * 言語表示情報のマップ
+ *
+ * 新しい言語を追加する場合:
+ * 1. i18n/constants.ts の SUPPORTED_LANGUAGES に追加
+ * 2. このマップに表示情報を追加
+ */
+const LANGUAGE_DISPLAY_INFO: Record<
+  SupportedLanguage,
+  { flag: string; label: string; ariaLabel: string }
+> = {
+  en: { flag: "🇺🇸", label: "English", ariaLabel: "English" },
+  ja: { flag: "🇯🇵", label: "日本語", ariaLabel: "Japanese" },
+};
 
 /**
  * LanguageSelector
@@ -16,9 +32,7 @@ import { useTranslation } from "react-i18next";
  *
  * 配置場所: ヘッダー右上（ユーザーアバターの横）
  *
- * 対応言語:
- * - English (en)
- * - 日本語 (ja)
+ * 対応言語は SUPPORTED_LANGUAGES から動的に生成されます。
  */
 export function LanguageSelector() {
   const { language, setLanguage, isLoading } = useLanguage();
@@ -31,18 +45,17 @@ export function LanguageSelector() {
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="en">
-          <span role="img" aria-label="English">
-            🇺🇸
-          </span>{" "}
-          English
-        </SelectItem>
-        <SelectItem value="ja">
-          <span role="img" aria-label="Japanese">
-            🇯🇵
-          </span>{" "}
-          日本語
-        </SelectItem>
+        {SUPPORTED_LANGUAGES.map((lang) => {
+          const info = LANGUAGE_DISPLAY_INFO[lang];
+          return (
+            <SelectItem key={lang} value={lang}>
+              <span role="img" aria-label={info.ariaLabel}>
+                {info.flag}
+              </span>{" "}
+              {info.label}
+            </SelectItem>
+          );
+        })}
       </SelectContent>
     </Select>
   );
